@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_unit/custom_draw/custom_draw.dart';
 import 'package:flutter_unit/draw/draw.dart';
 
 void main() {
@@ -86,6 +86,17 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('rader_char'),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => RadarCharPage()));
+              },
+            ),
+            CupertinoButton(
+              child: Text('CircleLoadingWidget'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Center(child: CircleLoadingWidget()),
+                  ),
+                );
               },
             ),
           ],

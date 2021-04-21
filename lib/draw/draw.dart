@@ -5,7 +5,6 @@ export 'level3.dart';
 export 'level4.dart';
 export 'level5.dart';
 export 'level6.dart';
-export 'radar_char_widget.dart';
 
 import 'package:flutter/material.dart';
 
