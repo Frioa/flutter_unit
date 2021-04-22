@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_unit/custom_draw/custom_draw.dart';
 import 'package:flutter_unit/draw/draw.dart';
+import 'package:flutter_unit/page/page.dart';
 
 void main() {
   // WidgetsFlutterBinding.ensureInitialized(); // 确定初始化

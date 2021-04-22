@@ -3,84 +3,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_unit/draw/draw.dart';
 import 'package:flutter_unit/custom_draw/custom_draw.dart';
 
-class RadarChartPage extends StatefulWidget {
-  @override
-  _RadarChartPageState createState() => _RadarChartPageState();
-}
-
-class _RadarChartPageState extends State<RadarChartPage> {
-  RadarChart x = RadarChart(values: [
-    50,
-    50,
-    50,
-    50,
-    50,
-  ], background: Colors.blue.withOpacity(0.2));
-  RadarChart y = RadarChart(values: [
-    100,
-    100,
-    100,
-    100,
-    100,
-  ], background: Colors.grey.withOpacity(0.2));
-  RadarChart z = RadarChart(values: [
-    25,
-    25,
-    25,
-    25,
-    25,
-  ], background: Colors.amber.withOpacity(0.2));
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        height: 1920,
-        width: 1080,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            RadarChartWidget(
-              size: Size(300, 300),
-              radarChartList: [x, y, z],
-              layerCount: 5,
-              // baseCoordinateColor: Colors.blue.withOpacity(0.2),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class RadarChartWidget extends StatefulWidget {
   final Size size;
-  final List<RadarChart> radarChartList;
+  final List<RadarChart> radarCharts;
   final int layerCount;
   final Color dashColor;
   final Color backgroundColor;
 
   RadarChart get maxRadarChart {
     final list = <double>[];
-    for (int i = 0; i < radarChartList[0].values.length; i++) {
+    for (int i = 0; i < radarCharts[0].values.length; i++) {
       double max = double.minPositive;
-      for (int j = 0; j < radarChartList.length; j++) {
-        if (max < radarChartList[j].values[i]) max = radarChartList[j].values[i];
+      for (int j = 0; j < radarCharts.length; j++) {
+        if (max < radarCharts[j].values[i]) max = radarCharts[j].values[i];
       }
       list.add(max);
     }
-
     return RadarChart(values: list);
   }
 
-  const RadarChartWidget({
+  RadarChartWidget({
     Key? key,
     required this.size,
-    required this.radarChartList,
+    required this.radarCharts,
     this.layerCount = 5,
     this.dashColor = Colors.grey,
     this.backgroundColor = Colors.transparent,
-  }) : super(key: key);
+  }) : super(key: key) {
+    assert(() {
+      for (int i = 1; i < radarCharts.length; i++)
+        if (radarCharts[i - 1].values.length != radarCharts[i].values.length) {
+          throw 'The length of each RadarChart.values must be equal';
+        }
+      return true;
+    }());
+  }
 
   @override
   _RadarChartWidgetState createState() => _RadarChartWidgetState();
@@ -99,7 +56,7 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
   late List<Animation<RadarChart>> animations;
 
   // 多边形边数
-  int get polygonSide => widget.radarChartList[0].values.length;
+  int get polygonSide => widget.radarCharts[0].values.length;
 
   // 每条边的角度
   double get unitAngle => 2 * pi / polygonSide;
@@ -141,9 +98,9 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
     }
 
     /// 计算每个图的百分比
-    for (int i = 0; i < widget.radarChartList.length; i++) {
-      var oldChar = oldWidget.radarChartList[i];
-      var char = widget.radarChartList[i];
+    for (int i = 0; i < widget.radarCharts.length; i++) {
+      var oldChar = oldWidget.radarCharts[i];
+      var char = widget.radarCharts[i];
       char /= maxChar;
       oldChar /= maxOldChar;
 
@@ -154,7 +111,7 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
   @override
   void didUpdateWidget(covariant RadarChartWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.radarChartList[0].values.length != widget.radarChartList[0].values.length)
+    if (oldWidget.radarCharts[0].values.length != widget.radarCharts[0].values.length)
       updateData(widget);
     else
       updateData(oldWidget);
