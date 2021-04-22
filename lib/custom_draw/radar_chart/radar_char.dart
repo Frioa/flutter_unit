@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_unit/custom_draw/radar_char/radar_chars.dart';
+import 'package:flutter_unit/custom_draw/custom_draw.dart';
 
-class RadarChar implements Equatable {
+class RadarChart implements Equatable {
   final List<double> values;
   final Color background;
 
-  const RadarChar({
+  const RadarChart({
     this.values = const [.0, .0, .0],
     this.background = Colors.blue,
   });
@@ -26,29 +26,29 @@ class RadarChar implements Equatable {
     return list;
   }
 
-  RadarChar operator +(RadarChar other) {
-    return RadarChar(
+  RadarChart operator +(RadarChart other) {
+    return RadarChart(
       values: values.compute(other.values, (v1, v2) => v1 + v2),
       background: this.background,
     );
   }
 
-  RadarChar operator -(RadarChar other) {
-    return RadarChar(
+  RadarChart operator -(RadarChart other) {
+    return RadarChart(
       values: values.compute(other.values, (v1, v2) => v1 - v2),
       background: this.background,
     );
   }
 
-  RadarChar operator *(double t) {
-    return RadarChar(
+  RadarChart operator *(double t) {
+    return RadarChart(
       values: values.compute(null, (v1, v2) => v1 * t),
       background: this.background,
     );
   }
 
-  RadarChar operator /(RadarChar other) {
-    return RadarChar(
+  RadarChart operator /(RadarChart other) {
+    return RadarChart(
       values: values.compute(other.values, (v1, v2) => v1 / v2),
       background: this.background,
     );
@@ -56,6 +56,6 @@ class RadarChar implements Equatable {
 
   @override
   String toString() {
-    return 'RadarChar{values: $values, background: $background}';
+    return 'RadarChart{values: $values, background: $background}';
   }
 }

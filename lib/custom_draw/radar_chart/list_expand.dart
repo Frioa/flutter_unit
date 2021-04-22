@@ -4,7 +4,6 @@ extension ListExpand<E> on List<E> {
     for (int i = 0; i < this.length; i++) {
       list.add(combine(this[i], other == null ? this[i] : other[i]));
     }
-
     return list;
   }
 }

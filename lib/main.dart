@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
             CupertinoButton(
               child: Text('rader_char'),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => RadarCharPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => RadarChartPage()));
               },
             ),
             CupertinoButton(
