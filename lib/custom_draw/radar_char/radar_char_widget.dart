@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_unit/custom_draw/radar_char/radar_char.dart';
 import 'package:flutter_unit/draw/draw.dart';
+import 'package:flutter_unit/custom_draw/custom_draw.dart';
 
 class RadarCharPage extends StatefulWidget {
   @override
@@ -10,8 +10,24 @@ class RadarCharPage extends StatefulWidget {
 }
 
 class _RadarCharPageState extends State<RadarCharPage> {
-  RadarChar x = RadarChar(x: 50, y: 50, z: 50, background: Colors.blue.withOpacity(0.2));
-  RadarChar y = RadarChar(x: 100, y: 100, z: 100, background: Colors.grey.withOpacity(0.2));
+  RadarChar x = RadarChar(values: [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+  ], background: Colors.blue.withOpacity(0.2));
+  RadarChar y = RadarChar(values: [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+  ], background: Colors.grey.withOpacity(0.2));
 
   @override
   Widget build(BuildContext context) {
@@ -20,43 +36,41 @@ class _RadarCharPageState extends State<RadarCharPage> {
     //   charList: [x, y],
     // );
 
-    print('object $x');
-    print('object $y');
-
     return Scaffold(
-      body: SizedBox(
-        width: 1000,
-        height: 1000,
+      body: Container(
+        height: 1920,
+        width: 1080,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             RadarCharWidget(
               size: Size(300, 300),
               charList: [x, y],
             ),
-            CupertinoButton(
-                child: Text('x +'),
-                onPressed: () {
-                  x += RadarChar(x: 10, y: 10, z: 10);
-                  setState(() {});
-                }),
-            CupertinoButton(
-                child: Text('x -'),
-                onPressed: () {
-                  x -= RadarChar(x: 10, y: 10, z: 10);
-                  setState(() {});
-                }),
-            CupertinoButton(
-                child: Text('y +'),
-                onPressed: () {
-                  y += RadarChar(x: 10, y: 10, z: 10);
-                  setState(() {});
-                }),
-            CupertinoButton(
-                child: Text('y -'),
-                onPressed: () {
-                  y -= RadarChar(x: 10, y: 10, z: 10);
-                  setState(() {});
-                }),
+            // CupertinoButton(
+            //     child: Text('x +'),
+            //     onPressed: () {
+            //       x = x + x;
+            //       setState(() {});
+            //     }),
+            // CupertinoButton(
+            //     child: Text('x -'),
+            //     onPressed: () {
+            //       x -= x;
+            //       setState(() {});
+            //     }),
+            // CupertinoButton(
+            //     child: Text('y +'),
+            //     onPressed: () {
+            //       y += y;
+            //       setState(() {});
+            //     }),
+            // CupertinoButton(
+            //     child: Text('y -'),
+            //     onPressed: () {
+            //       y -= y;
+            //       setState(() {});
+            //     }),
           ],
         ),
       ),
@@ -69,11 +83,18 @@ class RadarCharWidget extends StatefulWidget {
   final List<RadarChar> charList;
   final Color? backgroundColor;
 
-  double get xMax => charList.reduce((cur, next) => cur.x > next.x ? cur : next).x;
+  RadarChar get maxRadarChar {
+    final list = <double>[];
+    for (int i = 0; i < charList[0].values.length; i++) {
+      double max = double.minPositive;
+      for (int j = 0; j < charList.length; j++) {
+        if (max < charList[j].values[i]) max = charList[j].values[i];
+      }
+      list.add(max);
+    }
 
-  double get yMax => charList.reduce((cur, next) => cur.y > next.y ? cur : next).y;
-
-  double get zMax => charList.reduce((cur, next) => cur.z > next.z ? cur : next).z;
+    return RadarChar(values: list);
+  }
 
   const RadarCharWidget({
     Key? key,
@@ -87,22 +108,24 @@ class RadarCharWidget extends StatefulWidget {
 }
 
 class _RadarCharWidgetState extends State<RadarCharWidget> with SingleTickerProviderStateMixin {
-  static const heightFactor = 0.8;
-
   /// 高
-  late double height;
-  late AnimationController controller;
+  late double r;
+  late double yOffset;
   late List<Animation<RadarChar>> animations;
   late List<Offset> coordinate; // x, y, z ...
-  late RadarChar maxChar;
+  late AnimationController controller;
+
+  int get valueLength => widget.charList[0].values.length;
+
+  double get angleUnit => 2 * pi / valueLength;
 
   @override
   void initState() {
     super.initState();
-    height = 0.0;
-    controller = AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    r = 0.0;
     animations = [];
     coordinate = [];
+    controller = AnimationController(duration: const Duration(seconds: 1), vsync: this);
     initData(widget);
 
     controller.reset();
@@ -110,34 +133,32 @@ class _RadarCharWidgetState extends State<RadarCharWidget> with SingleTickerProv
   }
 
   void initData(RadarCharWidget oldWidget) {
-    // 宽高
-    height = widget.size.height * heightFactor;
-    final sideLength = height / cos(pi / 6); // 边长
-    final offsetLength = sideLength / 2 / cos(pi / 6); //   /// 原点到顶点的距离
+    r = widget.size.height / 2;
+    final sideLength = 2 * r * sin(pi / valueLength); // 边长
+    // Y 坐标偏移量, 保证坐标远点在中心
+    yOffset = valueLength % 2 == 0
+        ? 0
+        : (sqrt(r * r - sideLength * sideLength / 4) - r) / 2;
+
+    final maxChar = widget.maxRadarChar;
+    final maxOldChar = oldWidget.maxRadarChar;
 
     animations.clear();
     coordinate.clear();
-    maxChar = RadarChar(x: widget.xMax, y: widget.yMax, z: widget.zMax);
-    // 确定原点坐标 TODO:
-    final z = Offset(0, offsetLength);
-    final y = Offset(offsetLength * sin(pi / 3), -offsetLength * cos(pi / 3));
-    final x = Offset(-offsetLength * sin(pi / 3), -offsetLength * cos(pi / 3));
-    coordinate.add(x);
-    coordinate.add(y);
-    coordinate.add(z);
 
-    print('object $maxChar');
-    // coordinate
-    // for (int i = 0; i < widget.charList.length ; i++ ) {
-    //   // coordinate.add(value)
-    // }
+    /// 计算各个边顶点的坐标
+    final t = Offset(r, r);
+    for (int i = 0; i < valueLength; i++) {
+      final angle = i * angleUnit;
+      coordinate.add(Offset(t.dx * sin(angle), t.dy * cos(angle)));
+    }
 
+    /// 计算每个图的百分比
     for (int i = 0; i < widget.charList.length; i++) {
       var oldChar = oldWidget.charList[i];
       var char = widget.charList[i];
       char /= maxChar;
-
-      oldChar /= RadarChar(x: oldWidget.xMax, y: oldWidget.yMax, z: oldWidget.zMax);
+      oldChar /= maxOldChar;
 
       animations.add(Tween<RadarChar>(begin: oldChar, end: char).animate(controller));
     }
@@ -146,9 +167,18 @@ class _RadarCharWidgetState extends State<RadarCharWidget> with SingleTickerProv
   @override
   void didUpdateWidget(covariant RadarCharWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    initData(oldWidget);
+    if (oldWidget.charList[0].values.length != widget.charList[0].values.length)
+      initData(widget);
+    else
+      initData(oldWidget);
     controller.reset();
     controller.forward();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -162,8 +192,9 @@ class _RadarCharWidgetState extends State<RadarCharWidget> with SingleTickerProv
           painter: _RadarCharPainter(
             coordinate,
             animations,
-            height: height,
+            height: r,
             repaint: controller,
+            yOffset: yOffset,
           ),
         ),
       ),
@@ -179,6 +210,7 @@ class _RadarCharPainter extends CustomPainter {
   final Size dashedSize;
   final double dashedSpace;
   final Color backgroundColor;
+  final double yOffset;
 
   final _path = Path();
 
@@ -195,12 +227,13 @@ class _RadarCharPainter extends CustomPainter {
     this.dashedSize = const Size(5, .33),
     this.dashedSpace = 5,
     this.backgroundColor = Colors.transparent,
+    this.yOffset = 0,
     AnimationController? repaint,
   }) : super(repaint: repaint);
 
   void drawTriangle(Canvas canvas, Size size, List<Offset> list, {Paint? paint}) {
     canvas.save();
-    canvas.translate(0, -(size.height - height) / 2);
+    canvas.translate(0, yOffset);
 
     _path.reset();
     _path.moveTo(list[0].dx, list[0].dy);
@@ -238,7 +271,7 @@ class _RadarCharPainter extends CustomPainter {
 
     void drawCoordinate() {
       canvas.save();
-      canvas.translate(0, -(size.height - height) / 2);
+      canvas.translate(0, yOffset);
       _solidPint..color = Colors.black;
       for (int i = 0; i < coordinate.length; i++) {
         canvas.drawLine(Offset.zero, coordinate[i], _solidPint);
