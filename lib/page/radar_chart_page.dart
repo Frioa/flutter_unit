@@ -32,16 +32,18 @@ class _RadarChartPageState extends State<RadarChartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          RadarChartWidget(
-            size: Size(300, 300),
-            radarCharts: [x, y, z],
-            layerCount: 5,
-            // baseCoordinateColor: Colors.blue.withOpacity(0.2),
-          ),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            RadarChartWidget(
+              size: Size(300, 300),
+              radarCharts: [x,],
+              layerCount: 5,
+              // baseCoordinateColor: Colors.blue.withOpacity(0.2),
+            ),
+          ],
+        ),
       ),
     );
   }

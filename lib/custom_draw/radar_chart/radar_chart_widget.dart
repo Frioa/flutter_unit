@@ -82,7 +82,7 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
         0,
         polygonSide % 2 == 0
             ? 0
-            : (sqrt(radius * radius - sideLength * sideLength / 4) - radius) / 2);
+            : -(sqrt(radius * radius - sideLength * sideLength / 4) - radius) / 2);
 
     final maxChar = widget.maxRadarChart;
     final maxOldChar = oldWidget.maxRadarChart;
@@ -94,7 +94,7 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
     final t = Offset(radius, radius);
     for (int i = 0; i < polygonSide; i++) {
       final angle = i * unitAngle;
-      baseCoordinate.add(Offset(t.dx * sin(angle), t.dy * cos(angle)));
+      baseCoordinate.add(Offset(t.dx * sin(angle), -t.dy * cos(angle)));
     }
 
     /// 计算每个图的百分比
@@ -147,6 +147,7 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
 class _RadarChartPainter extends CustomPainter {
   final List<Offset> coordinate;
   final List<Animation<RadarChart>> animations;
+  final List<String> descList;
   final double height;
   final int layerCount;
   final Size dashedSize;
@@ -167,6 +168,7 @@ class _RadarChartPainter extends CustomPainter {
   _RadarChartPainter(
     this.coordinate,
     this.animations, {
+    this.descList = const ['1', '2', '3', '4', '5'],
     this.height = .0,
     this.layerCount = 5,
     this.dashedSize = const Size(5, .5),
@@ -288,14 +290,40 @@ class _RadarChartPainter extends CustomPainter {
     }
   }
 
+  void _drawText(Canvas canvas, Size size) {
+    canvas.save();
+    canvas.translate(origin.dx, origin.dy);
+
+    final textSpan = TextSpan(
+      text: 'n/a',
+      style: TextStyle(fontSize: 12, color: Colors.black),
+    );
+    final textPainter = TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.rtl,
+    );
+    textPainter.layout();
+    textPainter.paint(
+      canvas,
+      Offset(
+        // Do calculations here:
+        coordinate[0].dx,
+        coordinate[0].dy,
+      ),
+    );
+
+    canvas.restore();
+
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
     canvas.translate(size.width / 2, size.height / 2);
-    canvas.scale(1, -1);
 
     _drawBaseRadarChar(canvas, size);
     _drawInnerNetShape(canvas, size);
     _drawRadarCharList(canvas, size);
+    _drawText(canvas, size);
   }
 
   @override
