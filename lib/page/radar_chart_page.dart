@@ -13,6 +13,9 @@ class _RadarChartPageState extends State<RadarChartPage> {
     50,
     50,
     50,
+    100,
+    100,
+
   ], background: Colors.blue.withOpacity(0.2));
   RadarChart y = RadarChart(values: [
     100,
@@ -20,14 +23,10 @@ class _RadarChartPageState extends State<RadarChartPage> {
     100,
     100,
     100,
+    100,
+    100,
+
   ], background: Colors.grey.withOpacity(0.2));
-  RadarChart z = RadarChart(values: [
-    25,
-    25,
-    25,
-    25,
-    25,
-  ], background: Colors.amber.withOpacity(0.2));
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +37,10 @@ class _RadarChartPageState extends State<RadarChartPage> {
           children: [
             RadarChartWidget(
               size: Size(300, 300),
-              radarCharts: [x,],
+              radarCharts: [x, y],
               layerCount: 5,
-              // baseCoordinateColor: Colors.blue.withOpacity(0.2),
+              descList: ['语文', '数学','数学''数学''数学', '数学', '英语', '物理', '生物'],
+              descStyle: TextStyle(fontSize: 16, color: Colors.blue),
             ),
           ],
         ),

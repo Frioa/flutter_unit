@@ -6,6 +6,8 @@ import 'package:flutter_unit/custom_draw/custom_draw.dart';
 class RadarChartWidget extends StatefulWidget {
   final Size size;
   final List<RadarChart> radarCharts;
+  final List<String> descList;
+  final TextStyle? descStyle;
   final int layerCount;
   final Color dashColor;
   final Color backgroundColor;
@@ -26,11 +28,14 @@ class RadarChartWidget extends StatefulWidget {
     Key? key,
     required this.size,
     required this.radarCharts,
+    this.descList = const [],
+    this.descStyle,
     this.layerCount = 5,
     this.dashColor = Colors.grey,
     this.backgroundColor = Colors.transparent,
   }) : super(key: key) {
     assert(() {
+      if (radarCharts.length < 1) throw 'radarCharts is isEmpty';
       for (int i = 1; i < radarCharts.length; i++)
         if (radarCharts[i - 1].values.length != radarCharts[i].values.length) {
           throw 'The length of each RadarChart.values must be equal';
@@ -111,7 +116,8 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
   @override
   void didUpdateWidget(covariant RadarChartWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.radarCharts[0].values.length != widget.radarCharts[0].values.length)
+    if (oldWidget.radarCharts.length != widget.radarCharts.length ||
+        oldWidget.radarCharts[0].values.length != widget.radarCharts[0].values.length)
       updateData(widget);
     else
       updateData(oldWidget);
@@ -133,9 +139,11 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
         painter: _RadarChartPainter(
           baseCoordinate,
           animations,
-          height: radius,
+          radius: radius,
           repaint: controller,
           origin: origin,
+          descList: widget.descList,
+          style: widget.descStyle,
           layerCount: widget.layerCount,
           backgroundColor: widget.backgroundColor,
         ),
@@ -148,7 +156,8 @@ class _RadarChartPainter extends CustomPainter {
   final List<Offset> coordinate;
   final List<Animation<RadarChart>> animations;
   final List<String> descList;
-  final double height;
+  final TextStyle? style;
+  final double radius;
   final int layerCount;
   final Size dashedSize;
   final double dashedSpace;
@@ -168,8 +177,9 @@ class _RadarChartPainter extends CustomPainter {
   _RadarChartPainter(
     this.coordinate,
     this.animations, {
-    this.descList = const ['1', '2', '3', '4', '5'],
-    this.height = .0,
+    this.descList = const [],
+    this.style = const TextStyle(fontSize: 12, color: Colors.black),
+    this.radius = .0,
     this.layerCount = 5,
     this.dashedSize = const Size(5, .5),
     this.dashedSpace = 5,
@@ -264,12 +274,7 @@ class _RadarChartPainter extends CustomPainter {
 
   void _drawBaseRadarChar(Canvas canvas, Size size) {
     // 绘制坐标形状
-    _drawPolygon(
-      canvas,
-      size,
-      coordinate,
-      _coordinatePint,
-    );
+    _drawPolygon(canvas, size, coordinate, _coordinatePint);
 
     canvas.save();
     canvas.translate(origin.dx, origin.dy);
@@ -291,29 +296,25 @@ class _RadarChartPainter extends CustomPainter {
   }
 
   void _drawText(Canvas canvas, Size size) {
-    canvas.save();
-    canvas.translate(origin.dx, origin.dy);
+    for (int i = 0; i < descList.length; i++) {
+      if (i >= coordinate.length) return;
 
-    final textSpan = TextSpan(
-      text: 'n/a',
-      style: TextStyle(fontSize: 12, color: Colors.black),
-    );
-    final textPainter = TextPainter(
-      text: textSpan,
-      textDirection: TextDirection.rtl,
-    );
-    textPainter.layout();
-    textPainter.paint(
-      canvas,
-      Offset(
-        // Do calculations here:
-        coordinate[0].dx,
-        coordinate[0].dy,
-      ),
-    );
+      final textSpan = TextSpan(text: descList[i], style: style);
+      final textPainter = TextPainter(text: textSpan, textDirection: TextDirection.rtl);
+      textPainter.layout();
 
-    canvas.restore();
+      // 文字中心点坐标距原坐标的比值
+      final scale = 1 + sqrt(pow(textPainter.width, 2) + pow(textPainter.height, 2)) / 2 / radius;
 
+      // 移动坐标轴到顶点
+      canvas.save();
+      canvas.translate(origin.dx, origin.dy);
+      canvas.translate(coordinate[i].dx * scale, coordinate[i].dy * scale);
+
+      // 将文字中心绘制在画布原点
+      textPainter.paint(canvas, Offset(-textPainter.width / 2, -textPainter.height / 2));
+      canvas.restore();
+    }
   }
 
   @override
