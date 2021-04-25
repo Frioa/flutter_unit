@@ -49,7 +49,6 @@ class RadarChartWidget extends StatefulWidget {
 }
 
 class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerProviderStateMixin {
-  // 半径
   late double radius;
 
   // 原点坐标
@@ -273,7 +272,6 @@ class _RadarChartPainter extends CustomPainter {
   }
 
   void _drawBaseRadarChar(Canvas canvas, Size size) {
-    // 绘制坐标形状
     _drawPolygon(canvas, size, coordinate, _coordinatePint);
 
     canvas.save();

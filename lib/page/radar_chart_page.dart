@@ -7,26 +7,29 @@ class RadarChartPage extends StatefulWidget {
 }
 
 class _RadarChartPageState extends State<RadarChartPage> {
-  RadarChart x = RadarChart(values: [
-    50,
-    50,
-    50,
-    50,
-    50,
-    100,
-    100,
+  double xScale = 1.0;
+  double yScale = 100.0;
+  late RadarChart x;
+  late RadarChart y;
 
-  ], background: Colors.blue.withOpacity(0.2));
-  RadarChart y = RadarChart(values: [
-    100,
-    100,
-    100,
-    100,
-    100,
-    100,
-    100,
+  final unitRadar = RadarChart(values: [1, 1, 1]);
 
-  ], background: Colors.grey.withOpacity(0.2));
+  @override
+  void initState() {
+    super.initState();
+    update();
+  }
+
+  void update() {
+    x = RadarChart(
+      values: [xScale, xScale * 2, xScale * 3, xScale * 4, xScale * 5, xScale * 6],
+      background: Colors.blue.withOpacity(0.2),
+    );
+    y = RadarChart(
+      values: [yScale, yScale, yScale, yScale, yScale, yScale],
+      background: Colors.grey.withOpacity(0.2),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +42,32 @@ class _RadarChartPageState extends State<RadarChartPage> {
               size: Size(300, 300),
               radarCharts: [x, y],
               layerCount: 5,
-              descList: ['语文', '数学','数学''数学''数学', '数学', '英语', '物理', '生物'],
+              descList: ['语文', '数学', '数学', '英语', '物理', '生物'],
               descStyle: TextStyle(fontSize: 16, color: Colors.blue),
+            ),
+            Slider(
+              min: 1,
+              max: 100,
+              value: xScale,
+              onChanged: (v) {
+                xScale = v;
+                update();
+                setState(() {
+                  print(x);
+                });
+              },
+            ),
+            Slider(
+              min: 1,
+              max: 100,
+              value: yScale,
+              onChanged: (v) {
+                yScale = v;
+                update();
+                setState(() {
+                  print(y);
+                });
+              },
             ),
           ],
         ),
