@@ -34,6 +34,7 @@ class _RadarChartPageState extends State<RadarChartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('雷达图')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -52,9 +53,7 @@ class _RadarChartPageState extends State<RadarChartPage> {
               onChanged: (v) {
                 xScale = v;
                 update();
-                setState(() {
-                  print(x);
-                });
+                setState(() {});
               },
             ),
             Slider(
@@ -64,9 +63,7 @@ class _RadarChartPageState extends State<RadarChartPage> {
               onChanged: (v) {
                 yScale = v;
                 update();
-                setState(() {
-                  print(y);
-                });
+                setState(() {});
               },
             ),
           ],
