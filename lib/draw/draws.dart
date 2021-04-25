@@ -1,10 +1,5 @@
-export 'paper.dart';
-export 'level1.dart';
-export 'level2.dart';
-export 'level3.dart';
-export 'level4.dart';
-export 'level5.dart';
-export 'level6.dart';
+export 'circle_loading/circle_loadings.dart';
+export 'radar_chart/radar_charts.dart';
 
 import 'package:flutter/material.dart';
 
@@ -103,17 +98,12 @@ void _drawText(Canvas canvas, Size size) {
   canvas.restore();
 }
 
-
 // 定义成员变量
 final TextPainter _textPainter = TextPainter(textDirection: TextDirection.ltr);
 // 绘制方法
 
-
-void _drawAxisText(Canvas canvas, String str,
-    {Color color = Colors.black, bool x = false}) {
-  TextSpan text = TextSpan(
-      text: str,
-      style: TextStyle(  fontSize: 11,  color: color ));
+void _drawAxisText(Canvas canvas, String str, {Color color = Colors.black, bool x = false}) {
+  TextSpan text = TextSpan(text: str, style: TextStyle(fontSize: 11, color: color));
   _textPainter.text = text;
   _textPainter.layout(); // 进行布局
 
@@ -127,7 +117,7 @@ void _drawAxisText(Canvas canvas, String str,
   _textPainter.paint(canvas, offset);
 }
 
-void drawTable(Canvas canvas, Size size) {
+void drawCoordinateSystem(Canvas canvas, Size size) {
   _drawBottomRight(canvas, size);
 
   canvas.save();

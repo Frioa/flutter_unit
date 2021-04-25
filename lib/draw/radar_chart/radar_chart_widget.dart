@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_unit/draw/draw.dart';
-import 'package:flutter_unit/custom_draw/custom_draw.dart';
+import 'package:flutter_unit/draw/draws.dart';
 
 class RadarChartWidget extends StatefulWidget {
   final Size size;
@@ -318,6 +317,7 @@ class _RadarChartPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.translate(size.width / 2, size.height / 2);
 
+    // drawCoordinateSystem(canvas, size);
     _drawBaseRadarChar(canvas, size);
     _drawInnerNetShape(canvas, size);
     _drawRadarCharList(canvas, size);
