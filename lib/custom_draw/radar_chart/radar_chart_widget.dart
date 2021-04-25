@@ -11,6 +11,7 @@ class RadarChartWidget extends StatefulWidget {
   final int layerCount;
   final Color dashColor;
   final Color backgroundColor;
+  final AnimationController? controller;
 
   RadarChart get maxRadarChart {
     final list = <double>[];
@@ -33,6 +34,7 @@ class RadarChartWidget extends StatefulWidget {
     this.layerCount = 5,
     this.dashColor = Colors.grey,
     this.backgroundColor = Colors.transparent,
+    this.controller,
   }) : super(key: key) {
     assert(() {
       if (radarCharts.length < 1) throw 'radarCharts is isEmpty';
@@ -71,7 +73,7 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
     radius = 0.0;
     baseCoordinate = [];
     animations = [];
-    controller = AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    controller = widget.controller ?? AnimationController(duration: const Duration(seconds: 1), vsync: this);
 
     updateData(widget);
     controller.forward();
@@ -115,6 +117,7 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
   @override
   void didUpdateWidget(covariant RadarChartWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if (oldWidget == widget) return;
     if (oldWidget.radarCharts.length != widget.radarCharts.length ||
         oldWidget.radarCharts[0].values.length != widget.radarCharts[0].values.length)
       updateData(widget);
@@ -284,12 +287,8 @@ class _RadarChartPainter extends CustomPainter {
 
   void _drawRadarCharList(Canvas canvas, Size size) {
     for (final radarChart in animations) {
-      _drawPolygon(
-        canvas,
-        size,
-        radarChart.value.toOffsets(coordinate),
-        _radarCharPint..color = radarChart.value.background,
-      );
+      _radarCharPint.color = radarChart.value.background;
+      _drawPolygon(canvas, size, radarChart.value.toOffsets(coordinate), _radarCharPint);
     }
   }
 
