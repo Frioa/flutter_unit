@@ -10,6 +10,7 @@ class RadarChartWidget extends StatefulWidget {
   final int layerCount;
   final Color dashColor;
   final Color backgroundColor;
+  final EdgeInsets padding;
   final AnimationController? controller;
 
   RadarChart get maxRadarChart {
@@ -33,6 +34,7 @@ class RadarChartWidget extends StatefulWidget {
     this.layerCount = 5,
     this.dashColor = Colors.grey,
     this.backgroundColor = Colors.transparent,
+    this.padding = const EdgeInsets.symmetric(vertical: 24),
     this.controller,
   }) : super(key: key) {
     assert(() {
@@ -135,18 +137,21 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
-      child: CustomPaint(
-        size: widget.size,
-        painter: _RadarChartPainter(
-          baseCoordinate,
-          animations,
-          radius: radius,
-          repaint: controller,
-          origin: origin,
-          descList: widget.descList,
-          style: widget.descStyle,
-          layerCount: widget.layerCount,
-          backgroundColor: widget.backgroundColor,
+      child: Padding(
+        padding: widget.padding,
+        child: CustomPaint(
+          size: widget.size,
+          painter: _RadarChartPainter(
+            baseCoordinate,
+            animations,
+            radius: radius,
+            repaint: controller,
+            origin: origin,
+            descList: widget.descList,
+            style: widget.descStyle,
+            layerCount: widget.layerCount,
+            backgroundColor: widget.backgroundColor,
+          ),
         ),
       ),
     );
