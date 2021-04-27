@@ -74,10 +74,30 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
     radius = 0.0;
     baseCoordinate = [];
     animations = [];
-    controller = widget.controller ?? AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    controller =
+        widget.controller ?? AnimationController(duration: const Duration(seconds: 1), vsync: this);
 
     updateData(widget);
     controller.forward();
+  }
+
+  @override
+  void didUpdateWidget(covariant RadarChartWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget == widget) return;
+    if (oldWidget.radarCharts.length != widget.radarCharts.length ||
+        oldWidget.radarCharts[0].values.length != widget.radarCharts[0].values.length)
+      updateData(widget);
+    else
+      updateData(oldWidget);
+    controller.reset();
+    controller.forward();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   void updateData(RadarChartWidget oldWidget) {
@@ -113,25 +133,6 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
 
       animations.add(Tween<RadarChart>(begin: oldChar, end: char).animate(controller));
     }
-  }
-
-  @override
-  void didUpdateWidget(covariant RadarChartWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget == widget) return;
-    if (oldWidget.radarCharts.length != widget.radarCharts.length ||
-        oldWidget.radarCharts[0].values.length != widget.radarCharts[0].values.length)
-      updateData(widget);
-    else
-      updateData(oldWidget);
-    controller.reset();
-    controller.forward();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
   }
 
   @override
