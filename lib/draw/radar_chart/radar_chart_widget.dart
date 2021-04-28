@@ -74,8 +74,11 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
     radius = 0.0;
     baseCoordinate = [];
     animations = [];
-    controller =
-        widget.controller ?? AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    controller = widget.controller ??
+        AnimationController(
+          duration: const Duration(milliseconds: 800),
+          vsync: this,
+        );
 
     updateData(widget);
     controller.forward();
@@ -86,9 +89,11 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
     super.didUpdateWidget(oldWidget);
     if (oldWidget == widget) return;
     if (oldWidget.radarCharts.length != widget.radarCharts.length ||
-        oldWidget.radarCharts[0].values.length != widget.radarCharts[0].values.length)
+        oldWidget.radarCharts[0].values.length != widget.radarCharts[0].values.length) {
+      animations.clear();
+      baseCoordinate.clear();
       updateData(widget);
-    else
+    } else
       updateData(oldWidget);
     controller.reset();
     controller.forward();
@@ -102,7 +107,6 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
 
   void updateData(RadarChartWidget oldWidget) {
     radius = widget.size.height / 2;
-    // 边长
     final sideLength = 2 * radius * sin(pi / polygonSide);
     // 边数为奇数边时，需要计算原点坐标偏移量
     origin = Offset(
@@ -111,27 +115,29 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
             ? 0
             : -(sqrt(radius * radius - sideLength * sideLength / 4) - radius) / 2);
 
-    final maxChar = widget.maxRadarChart;
-    final maxOldChar = oldWidget.maxRadarChart;
-
-    animations.clear();
-    baseCoordinate.clear();
-
-    /// 计算各个边顶点的坐标
-    final t = Offset(radius, radius);
-    for (int i = 0; i < polygonSide; i++) {
-      final angle = i * unitAngle;
-      baseCoordinate.add(Offset(t.dx * sin(angle), -t.dy * cos(angle)));
+    /// 计算坐标系，如果需要
+    if (baseCoordinate.length != polygonSide) {
+      /// 计算各个边顶点的坐标
+      final t = Offset(radius, radius);
+      baseCoordinate.clear();
+      for (int i = 0; i < polygonSide; i++) {
+        final angle = i * unitAngle;
+        baseCoordinate.add(Offset(t.dx * sin(angle), -t.dy * cos(angle)));
+      }
     }
 
-    /// 计算每个图的百分比
     for (int i = 0; i < widget.radarCharts.length; i++) {
-      var oldChar = oldWidget.radarCharts[i];
-      var char = widget.radarCharts[i];
-      char /= maxChar;
-      oldChar /= maxOldChar;
+      var chart = widget.radarCharts[i];
+      chart /= widget.maxRadarChart;
 
-      animations.add(Tween<RadarChart>(begin: oldChar, end: char).animate(controller));
+      if (i == animations.length) {
+        // 初始化 animations, 从 0 开始做动画
+        animations.add(Tween<RadarChart>(begin: chart * 0, end: chart).animate(controller));
+      } else {
+        // 更新 animations, 从当前旧数据开始到新数据
+        animations[i] =
+            Tween<RadarChart>(begin: animations[i].value, end: chart).animate(controller);
+      }
     }
   }
 
@@ -323,10 +329,15 @@ class _RadarChartPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.translate(size.width / 2, size.height / 2);
 
-    // drawCoordinateSystem(canvas, size);
+    /// 绘制背景
     _drawBaseRadarChar(canvas, size);
+    // 绘制内部虚线
     _drawInnerNetShape(canvas, size);
+
+    /// 绘制数据模型
     _drawRadarCharList(canvas, size);
+
+    /// 绘制坐标系文案
     _drawText(canvas, size);
   }
 

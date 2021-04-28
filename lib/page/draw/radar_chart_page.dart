@@ -9,8 +9,8 @@ class RadarChartPage extends StatefulWidget {
 class _RadarChartPageState extends State<RadarChartPage> {
   double xScale = 1.0;
   double yScale = 100.0;
-  late RadarChart x;
-  late RadarChart y;
+  late RadarChart student1;
+  late RadarChart student2;
 
   final unitRadar = RadarChart(values: [1, 1, 1]);
 
@@ -21,12 +21,12 @@ class _RadarChartPageState extends State<RadarChartPage> {
   }
 
   void update() {
-    x = RadarChart(
-      values: [xScale, xScale * 2, xScale * 3, xScale * 4, xScale * 5, xScale * 6],
+    student1 = RadarChart(
+      values: [xScale, xScale * 2, xScale * 3, xScale * 4, xScale * 5],
       background: Colors.blue.withOpacity(0.2),
     );
-    y = RadarChart(
-      values: [yScale, yScale, yScale, yScale, yScale, yScale],
+    student2 = RadarChart(
+      values: [yScale, yScale, yScale, yScale, yScale],
       background: Colors.grey.withOpacity(0.2),
     );
   }
@@ -41,9 +41,8 @@ class _RadarChartPageState extends State<RadarChartPage> {
           children: [
             RadarChartWidget(
               size: Size(300, 300),
-              radarCharts: [x, y],
-              layerCount: 5,
-              descList: ['语文', '数学', '数学', '英语', '物理', '生物'],
+              radarCharts: [student1, student2],
+              descList: ['语文', '数学', '数学', '英语','化学' ],
               descStyle: TextStyle(fontSize: 16, color: Colors.blue),
             ),
             Slider(
