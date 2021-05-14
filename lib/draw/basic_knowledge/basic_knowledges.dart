@@ -1,0 +1,1 @@
+export 'paint_widget.dart';
