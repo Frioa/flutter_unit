@@ -1,5 +1,6 @@
 export 'circle_loading/circle_loadings.dart';
 export 'radar_chart/radar_charts.dart';
+export 'basic_knowledge/basic_knowledge.dart';
 
 import 'package:flutter/material.dart';
 

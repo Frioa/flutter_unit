@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_unit/draw/draws.dart';
 
@@ -10,8 +11,19 @@ class _DrawBaseKnowledgePageState extends State<DrawBaseKnowledgePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Loading')),
-      body: CircleLoadingWidget(),
+      appBar: AppBar(title: Text('Flutter 绘制指南')),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            CupertinoButton(
+              child: Text('Paint 篇'),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PaintWidget()));
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

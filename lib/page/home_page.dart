@@ -31,6 +31,12 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             CupertinoButton(
+              child: Text('Flutter 绘制指南'),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DrawBaseKnowledgePage()));
+              },
+            ),
+            CupertinoButton(
               child: Text('Loading'),
               onPressed: () {
                 Navigator.push(
