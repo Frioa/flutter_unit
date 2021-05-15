@@ -22,6 +22,9 @@ class RadarChartWidget extends StatefulWidget {
       }
       list.add(max);
     }
+
+
+
     return RadarChart(values: list);
   }
 
