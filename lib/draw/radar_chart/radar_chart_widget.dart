@@ -38,7 +38,7 @@ class RadarChartWidget extends StatefulWidget {
     this.controller,
   }) : super(key: key) {
     assert(() {
-      if (radarCharts.length < 1) throw 'radarCharts is isEmpty';
+      if (radarCharts.isEmpty) throw 'radarCharts is isEmpty';
       for (int i = 1; i < radarCharts.length; i++)
         if (radarCharts[i - 1].values.length != radarCharts[i].values.length) {
           throw 'The length of each RadarChart.values must be equal';
