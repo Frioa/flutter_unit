@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_unit/provider/provider.dart';
 
 class StrokePainterWidget extends StatefulWidget {
+  final Size size;
+
+  const StrokePainterWidget({Key? key, required this.size}) : super(key: key);
+
   @override
   _StrokePainterWidgetState createState() => _StrokePainterWidgetState();
 }
@@ -9,31 +13,56 @@ class StrokePainterWidget extends StatefulWidget {
 class _StrokePainterWidgetState extends State<StrokePainterWidget> {
   @override
   Widget build(BuildContext context) {
-    return Listener(
-      onPointerDown: (d) {
-        print('onPointerDown ');
+    return GestureDetector(
+      onTap: () {
+        setState(() {});
       },
-      child: CustomPaint(painter: StrokePainter()),
+      child: CustomPaint(
+        size: widget.size,
+        painter: StrokePainter(),
+      ),
     );
   }
 }
 
 class StrokePainter extends CustomPainter {
+  /// TODO : 更好的方式实现 hitTest
+  static const double r = 60.0;
+  final Offset center1 = Offset(r, r);
+  final Offset center2 = Offset(r + 120.0 + 10, r);
+
+  PaintingStyle style1 = PaintingStyle.stroke;
+
+  PaintingStyle style2 = PaintingStyle.fill;
+
+  bool hitTestStyle1 = false;
+
+  bool hitTestStyle2 = false;
+
+  PaintingStyle _updateStyle(PaintingStyle style) {
+    if (style == PaintingStyle.stroke) {
+      return PaintingStyle.fill;
+    } else {
+      return PaintingStyle.stroke;
+    }
+  }
+
   void drawStyleStrokeWidth(Canvas canvas) {
-    Paint paint = Paint()..color = Colors.red;
-    final r = 60.0;
+    Paint paint = Paint()
+      ..color = Colors.red;
+
     canvas.drawCircle(
-        Offset(r, r),
+        center1,
         r,
         paint
-          ..style = PaintingStyle.stroke
+          ..style = style1
           ..strokeWidth = 10);
     canvas.drawCircle(
-      Offset(r + 120.0 + 10, r),
+      center2,
       r,
       paint
         ..strokeWidth = 10
-        ..style = PaintingStyle.fill,
+        ..style = style2,
     );
     canvas.drawLine(
       Offset(-L.screenWidth, 0),
@@ -51,10 +80,27 @@ class StrokePainter extends CustomPainter {
 
   @override
   bool? hitTest(Offset position) {
-    print('object ${position}');
-    return super.hitTest(position);
+    print('direction  ${(position - Offset(r, r)).distance}');
+
+    if ((position - center1).distance < r) {
+      hitTestStyle1 = true;
+      return true;
+    }
+
+    // TODO:
+    // if ((position - center2))
+      // print('direction false');
+
+      return false;
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
+  bool shouldRepaint(StrokePainter oldDelegate) {
+    if (oldDelegate.hitTestStyle1) {
+      style1 = _updateStyle(oldDelegate.style1);
+      return true;
+    }
+
+    return false;
+  }
 }

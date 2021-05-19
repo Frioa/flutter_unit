@@ -12,13 +12,7 @@ mixin PaintMixin {
       case PaintWidgetType.antiAlias:
         return CustomPaint(painter: AntiAliasPainter(), size: size);
       case PaintWidgetType.stroke:
-        return GestureDetector(
-          child: CustomPaint(foregroundPainter: StrokePainter(), size: size),
-          onTap: () {
-            print('object');
-          },
-
-        );
+        return StrokePainterWidget(size: size);
     }
   }
 
