@@ -45,6 +45,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
+            CupertinoButton(
+              child: Text('Line Chart'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LineChartPage()),
+                );
+              },
+            ),
           ],
         ),
       ),
