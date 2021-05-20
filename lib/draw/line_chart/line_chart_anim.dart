@@ -49,15 +49,15 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
   static const double _unitWidthFactor = 1.0;
   static const double _shortWidthFactor = 0.178;
 
+  double chartMaxHeight = 0.0; // 最高柱状图的高
+  double unitWidth = 0.0; // 左右点的宽
+  double shortWidth = 0.0; // 左右短边宽
+  List<Offset> offsets = []; // 各点坐标
+
   late AnimationController textController;
   late AnimationController chartController;
   late List<Animation<double>> testAnimations;
   late List<Animation<Offset>> chartAnimation;
-
-  double chartMaxHeight = 0.0;
-  double unitWidth = 0.0; // 左右点的宽
-  double shortWidth = 0.0; // 左右短边宽
-  List<Offset> offsets = []; // 各点坐标
 
   @override
   void initState() {
@@ -80,7 +80,7 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
   void didUpdateWidget(covariant LineChartAnim oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.sliderValue != widget.sliderValue) {
-      playTestAnim(oldWidget);
+      playTextAnim(oldWidget);
     }
     if (oldWidget.values != widget.values) {
       playChartAnim();
@@ -109,7 +109,7 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
     }
   }
 
-  void playTestAnim(LineChartAnim oldWidget) {
+  void playTextAnim(LineChartAnim oldWidget) {
     final oldIndex = oldWidget.sliderIndex;
     final newIndex = widget.sliderIndex;
     for (int i = 0; i < widget.labels.length; i++) {
@@ -159,7 +159,7 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
           controller: textController,
           labels: widget.labels,
           testAnimations: testAnimations,
-          chartAnimation: chartAnimation,
+          offsetsAnim: chartAnimation,
           sliderValue: widget.sliderValue,
           strokeWidth: widget.strokeWidth,
           circleWidth: widget.circleWidth,
@@ -189,7 +189,7 @@ class _LineChartPainter extends CustomPainter {
   final Color inactiveColor;
   final List<Color> gradientColors;
   final List<Animation<double>> testAnimations;
-  final List<Animation<Offset>> chartAnimation;
+  final List<Animation<Offset>> offsetsAnim;
 
   Offset leftOffset = Offset.zero;
   Offset rightOffset = Offset.zero;
@@ -201,6 +201,8 @@ class _LineChartPainter extends CustomPainter {
   late Paint _circlePaint;
   late Paint _backgroundPaint;
   late Path _path;
+
+  int get sliderIndex => sliderValue.toInt();
 
   _LineChartPainter({
     this.unitWidth = 2,
@@ -216,7 +218,7 @@ class _LineChartPainter extends CustomPainter {
     this.inactiveColor = Colors.grey,
     this.gradientColors = const [],
     this.testAnimations = const [],
-    this.chartAnimation = const [],
+    this.offsetsAnim = const [],
     AnimationController? controller,
   }) : super(repaint: controller) {
     _activeLinePaint = Paint();
@@ -245,8 +247,6 @@ class _LineChartPainter extends CustomPainter {
     _path = Path();
   }
 
-  int get sliderIndex => sliderValue.toInt();
-
   bool _isActive(int index) => index <= sliderIndex;
 
   Color _color(int index) => _isActive(index) ? activeColor : inactiveColor;
@@ -264,15 +264,18 @@ class _LineChartPainter extends CustomPainter {
       }
     }
 
-    for (int i = 0; i < chartAnimation.length; i++) {
-      _drawDottedLine(chartAnimation[i].value, Offset(chartAnimation[i].value.dx, 0),
-          _dottedLinePaint..color = _color(i));
+    for (int i = 0; i < offsetsAnim.length; i++) {
+      _drawDottedLine(
+        offsetsAnim[i].value,
+        Offset(offsetsAnim[i].value.dx, 0),
+        _dottedLinePaint..color = _color(i),
+      );
     }
   }
 
   void drawDots(Canvas canvas, Size size) {
-    for (int i = 0; i < chartAnimation.length; i++) {
-      canvas.drawCircle(chartAnimation[i].value, circleWidth / 2, _circlePaint..color = _color(i));
+    for (int i = 0; i < offsetsAnim.length; i++) {
+      canvas.drawCircle(offsetsAnim[i].value, circleWidth / 2, _circlePaint..color = _color(i));
     }
   }
 
@@ -280,11 +283,11 @@ class _LineChartPainter extends CustomPainter {
     // 绘制左边的短线
     _path.reset();
     _path.moveTo(leftOffset.dx, leftOffset.dy);
-    _path.lineTo(chartAnimation[0].value.dx, chartAnimation[0].value.dy);
+    _path.lineTo(offsetsAnim[0].value.dx, offsetsAnim[0].value.dy);
 
-    for (int i = 1; i < chartAnimation.length; i++) {
-      final pre = chartAnimation[i - 1].value;
-      final cur = chartAnimation[i].value;
+    for (int i = 1; i < offsetsAnim.length; i++) {
+      final pre = offsetsAnim[i - 1].value;
+      final cur = offsetsAnim[i].value;
       final mid = Offset(pre.dx, cur.dy);
 
       _path.lineTo(mid.dx, mid.dy);
@@ -296,21 +299,21 @@ class _LineChartPainter extends CustomPainter {
   }
 
   void drawInactiveLine(Canvas canvas, Size size) {
-    if (sliderIndex + 1 >= chartAnimation.length) return;
+    if (sliderIndex + 1 >= offsetsAnim.length) return;
 
     _path.reset();
-    _path.moveTo(chartAnimation[sliderIndex].value.dx, chartAnimation[sliderIndex + 1].value.dy);
-    for (int i = sliderIndex + 1; i < chartAnimation.length; i++) {
-      final pre = chartAnimation[i - 1].value;
-      final cur = chartAnimation[i].value;
+    _path.moveTo(offsetsAnim[sliderIndex].value.dx, offsetsAnim[sliderIndex + 1].value.dy);
+    for (int i = sliderIndex + 1; i < offsetsAnim.length; i++) {
+      final pre = offsetsAnim[i - 1].value;
+      final cur = offsetsAnim[i].value;
       final mid = Offset(pre.dx, cur.dy);
 
       _path.lineTo(mid.dx, mid.dy);
-      _path.lineTo(chartAnimation[i].value.dx, chartAnimation[i].value.dy);
+      _path.lineTo(offsetsAnim[i].value.dx, offsetsAnim[i].value.dy);
     }
 
     // 绘制左边的短线
-    _path.lineTo(chartAnimation.last.value.dx + shortWidth, chartAnimation.last.value.dy);
+    _path.lineTo(offsetsAnim.last.value.dx + shortWidth, offsetsAnim.last.value.dy);
     canvas.drawPath(_path, _inactiveLinePaint);
   }
 
@@ -318,23 +321,21 @@ class _LineChartPainter extends CustomPainter {
     _path.reset();
     _path.moveTo(0, 0);
     _path.lineTo(leftOffset.dx, leftOffset.dy);
-    _path.lineTo(chartAnimation[0].value.dx, chartAnimation[0].value.dy);
+    _path.lineTo(offsetsAnim[0].value.dx, offsetsAnim[0].value.dy);
 
     for (int i = 1; i <= sliderIndex; i++) {
-      final pre = chartAnimation[i - 1].value;
-      final cur = chartAnimation[i].value;
+      final pre = offsetsAnim[i - 1].value;
+      final cur = offsetsAnim[i].value;
       final mid = Offset(pre.dx, cur.dy);
       _path.lineTo(mid.dx, mid.dy);
-      _path.lineTo(chartAnimation[i].value.dx, chartAnimation[i].value.dy);
+      _path.lineTo(offsetsAnim[i].value.dx, offsetsAnim[i].value.dy);
     }
-    if (sliderIndex + 1 < chartAnimation.length) {
-      _path.lineTo(chartAnimation[sliderIndex].value.dx, chartAnimation[sliderIndex + 1].value.dy);
+    if (sliderIndex + 1 < offsetsAnim.length) {
+      _path.lineTo(offsetsAnim[sliderIndex].value.dx, offsetsAnim[sliderIndex + 1].value.dy);
     }
     final sliderOffset = Offset(
-      chartAnimation[sliderIndex].value.dx + (sliderValue - sliderIndex) * unitWidth,
-      chartAnimation[(sliderIndex + 1) < chartAnimation.length ? sliderIndex + 1 : sliderIndex]
-          .value
-          .dy,
+      offsetsAnim[sliderIndex].value.dx + (sliderValue - sliderIndex) * unitWidth,
+      offsetsAnim[(sliderIndex + 1) < offsetsAnim.length ? sliderIndex + 1 : sliderIndex].value.dy,
     );
     _path.lineTo(sliderOffset.dx, sliderOffset.dy);
     _path.lineTo(sliderOffset.dx, 0);
@@ -363,9 +364,11 @@ class _LineChartPainter extends CustomPainter {
       textPainter.layout();
 
       canvas.save();
-      // 将坐标移动到每个点`
+      // 将原点坐标移动到每个点
       canvas.translate(
-          chartAnimation[i].value.dx, -chartAnimation[i].value.dy - textPainter.height / 2 * 1.25);
+        offsetsAnim[i].value.dx,
+        -offsetsAnim[i].value.dy - textPainter.height / 2 * 1.25,
+      );
       // 在文字中心点绘制
       textPainter.paint(canvas, Offset(-textPainter.width / 2, -textPainter.height / 2));
       canvas.restore();
@@ -374,9 +377,9 @@ class _LineChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (chartAnimation.isEmpty) return;
-    leftOffset = Offset(0, chartAnimation[0].value.dy);
-    rightOffset = chartAnimation.last.value + Offset(shortWidth, 0);
+    if (offsetsAnim.isEmpty) return;
+    leftOffset = Offset(0, offsetsAnim[0].value.dy);
+    rightOffset = offsetsAnim.last.value + Offset(shortWidth, 0);
 
     /// 原点坐标移动到左下角
     canvas.scale(1, -1);
@@ -393,6 +396,6 @@ class _LineChartPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LineChartPainter oldDelegate) {
-    return sliderValue != oldDelegate.sliderValue || !chartAnimation[0].isDismissed;
+    return sliderValue != oldDelegate.sliderValue || !offsetsAnim[0].isDismissed;
   }
 }
