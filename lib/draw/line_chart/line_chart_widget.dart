@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_unit/draw/line_chart/line_charts.dart';
 
@@ -18,17 +19,13 @@ class LineChartWidget extends StatefulWidget {
 }
 
 class _LineChartWidgetState extends State<LineChartWidget> {
-  static const double sliderHeight = 258.0;
-
-  double value = 0.0;
-
-  double index = 0;
+  double value = 0;
+  bool x= true;
   List<double> values = [2.0, 1.7, 1.4, 1.0, 0.75, 0.5, 0.5];
 
   @override
   void initState() {
     super.initState();
-    value = 0.0;
   }
 
   @override
@@ -41,15 +38,33 @@ class _LineChartWidgetState extends State<LineChartWidget> {
         children: [
           LineChartAnim(
             values: values,
+            width: 288,
+            height: 292,
+            labels: values.map((e) => '$e%').toList(),
+            sliderValue: value,
           ),
           Slider(
-            value: index,
+            value: value,
             min: .0,
-            max: values.length.toDouble(),
+            max: values.length.toDouble() - 1,
             divisions: values.length - 1,
             onChanged: (i) {
-              index = i;
+              value = i;
+              print('slider $i');
               setState(() {});
+            },
+          ),
+          CupertinoButton(
+            child: Text('data'),
+            onPressed: () {
+              if (x) {
+                values = [2.0, 1.7, 1.4, 1.0, 0.75, 0.5, 0.5];
+              }else {
+                values = [.0, .0, .0, .0, 0.0, 0.0, 0.0];
+              }
+              x = !x;
+              setState(() {
+              });
             },
           ),
         ],
