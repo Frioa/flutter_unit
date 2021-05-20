@@ -34,6 +34,22 @@ class _PaintWidgetState extends State<PaintWidget> with PaintMixin {
               padding: EdgeInsets.symmetric(vertical: 8.sp),
             ),
             MarkDownBodyWidget('> **注意:** 只有画笔是 `stroke` 类型线宽才会起作用。 而且线条的宽度有一半在外侧，必要时需要进行校正'),
+            MarkDownBodyWidget('**二、详细认识画笔**<br>'
+                '* `strokeCap:` 线帽类型\n'
+                '* `strokeJoin:` 线接类型\n'
+                '* `strokeMiterLimit:` 斜接限制\n\n'
+                '**1. 线帽类型strokeCap**\n\n<br>'
+                '> - StrokeCap.butt - 不出头\n'
+                '> - StrokeCap.round - 圆头\n'
+                '> - StrokeCap.square - 方头\n'
+                ''),
+            buildCustomPaint(
+              type: PaintWidgetType.strokeCap,
+              size: Size(L.screenWidth, 120),
+              padding: EdgeInsets.symmetric(vertical: 8.sp),
+            ),
+
+            SizedBox(height: 16.sp),
           ],
         ),
       ),

@@ -16,9 +16,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(title: Text(widget.title)),
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
         child: Column(
@@ -33,7 +31,8 @@ class _MyHomePageState extends State<MyHomePage> {
             CupertinoButton(
               child: Text('Flutter 绘制指南'),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => DrawBaseKnowledgePage()));
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => DrawBaseKnowledgePage()));
               },
             ),
             CupertinoButton(

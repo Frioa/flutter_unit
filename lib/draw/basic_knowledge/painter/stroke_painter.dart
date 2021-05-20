@@ -48,8 +48,7 @@ class StrokePainter extends CustomPainter {
   }
 
   void drawStyleStrokeWidth(Canvas canvas) {
-    Paint paint = Paint()
-      ..color = Colors.red;
+    Paint paint = Paint()..color = Colors.red;
 
     canvas.drawCircle(
         center1,
@@ -80,24 +79,34 @@ class StrokePainter extends CustomPainter {
 
   @override
   bool? hitTest(Offset position) {
-    print('direction  ${(position - Offset(r, r)).distance}');
 
     if ((position - center1).distance < r) {
+      print('hitTest 1');
+
       hitTestStyle1 = true;
       return true;
     }
 
     // TODO:
-    // if ((position - center2))
-      // print('direction false');
+    if ((position - center2).distance < r) {
+      print('hitTest 2');
 
-      return false;
+      hitTestStyle2 = true;
+      return true;
+    }
+
+    return false;
   }
 
   @override
   bool shouldRepaint(StrokePainter oldDelegate) {
     if (oldDelegate.hitTestStyle1) {
       style1 = _updateStyle(oldDelegate.style1);
+      return true;
+    }
+
+    if (oldDelegate.hitTestStyle2) {
+      style2 = _updateStyle(oldDelegate.style2);
       return true;
     }
 
