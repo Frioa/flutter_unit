@@ -350,7 +350,7 @@ class _LineChartPainter extends CustomPainter {
     canvas.drawPath(_path, _backgroundPaint);
   }
 
-  void drawLabels(Canvas canvas, Size size) {
+  void drawTextLabels(Canvas canvas, Size size) {
     // 翻转画布防止文字反向绘制
     canvas.scale(1, -1);
 
@@ -391,7 +391,7 @@ class _LineChartPainter extends CustomPainter {
     drawActiveLine(canvas, size);
     drawInactiveLine(canvas, size);
     drawDots(canvas, size);
-    drawLabels(canvas, size);
+    drawTextLabels(canvas, size);
   }
 
   @override
