@@ -59,7 +59,7 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
   late AnimationController textController;
   late AnimationController chartController;
   late List<Animation<double>> textAnimations;
-  late List<Animation<Offset>> chartAnimation;
+  late List<Animation<Offset>> chartAnimations;
   late Listenable repaint;
 
   @override
@@ -67,13 +67,13 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
     super.initState();
     _initData();
     textAnimations = [];
-    chartAnimation = [];
+    chartAnimations = [];
     textController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
     chartController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
-    for (int i = 0; i < offsets.length; i++) {
+    for (final offset in offsets) {
       textAnimations.add(Tween<double>(begin: 1.0, end: 1).animate(textController));
-      chartAnimation.add(
-          Tween<Offset>(begin: Offset(offsets[i].dx, 0), end: offsets[i]).animate(chartController));
+      chartAnimations
+          .add(Tween<Offset>(begin: offset.scale(1, 0), end: offset).animate(chartController));
     }
 
     repaint = Listenable.merge(<Listenable>[textController, chartController]);
@@ -137,8 +137,8 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
     _initData();
 
     for (int i = 0; i < widget.values.length; i++) {
-      chartAnimation[i] =
-          Tween<Offset>(begin: chartAnimation[i].value, end: offsets[i]).animate(chartController);
+      chartAnimations[i] =
+          Tween<Offset>(begin: chartAnimations[i].value, end: offsets[i]).animate(chartController);
     }
     textAnimations[textEnlargeIndex] =
         Tween<double>(begin: textAnimations[textEnlargeIndex].value, end: 1)
@@ -161,7 +161,7 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
         painter: _LineChartPainter(
           labels: widget.labels,
           testAnimations: textAnimations,
-          offsetsAnim: chartAnimation,
+          offsetsAnim: chartAnimations,
           sliderValue: widget.sliderValue,
           strokeWidth: widget.strokeWidth,
           circleWidth: widget.circleWidth,
