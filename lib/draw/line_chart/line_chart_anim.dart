@@ -44,7 +44,7 @@ class LineChartAnim extends StatefulWidget {
 }
 
 class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateMixin {
-  static const double testScale = 2.5;
+  static const double _testAnimScale = 2.5;
   static const double _heightFactor = 0.7;
   static const double _unitWidthFactor = 1.0;
   static const double _shortWidthFactor = 0.178;
@@ -63,7 +63,7 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
   @override
   void initState() {
     super.initState();
-    initData();
+    _initData();
     testAnimations = [];
     chartAnimation = [];
     textController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
@@ -80,10 +80,10 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
   void didUpdateWidget(covariant LineChartAnim oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.sliderValue != widget.sliderValue) {
-      playTextAnim(oldWidget);
+      _playTextAnim(oldWidget);
     }
     if (oldWidget.values != widget.values) {
-      playChartAnim();
+      _playChartAnim();
     }
   }
 
@@ -94,7 +94,7 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
     super.dispose();
   }
 
-  void initData() {
+  void _initData() {
     // 计算宽度
     chartMaxHeight = widget.height * _heightFactor;
     unitWidth =
@@ -109,7 +109,7 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
     }
   }
 
-  void playTextAnim(LineChartAnim oldWidget) {
+  void _playTextAnim(LineChartAnim oldWidget) {
     final oldIndex = oldWidget.sliderIndex;
     final newIndex = widget.sliderIndex;
     for (int i = 0; i < widget.labels.length; i++) {
@@ -123,7 +123,7 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
       if (i == newIndex) {
         testAnimations[newIndex] = Tween<double>(
           begin: testAnimations[newIndex].value,
-          end: testScale,
+          end: _testAnimScale,
         ).animate(textController);
         continue;
       }
@@ -134,8 +134,8 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
     textController.forward();
   }
 
-  void playChartAnim() {
-    initData();
+  void _playChartAnim() {
+    _initData();
 
     for (int i = 0; i < widget.values.length; i++) {
       chartAnimation[i] =
@@ -154,8 +154,6 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
       child: CustomPaint(
         size: Size(widget.width, widget.height),
         painter: _LineChartPainter(
-          unitWidth: unitWidth,
-          shortWidth: shortWidth,
           labels: widget.labels,
           testAnimations: testAnimations,
           offsetsAnim: chartAnimation,
@@ -177,8 +175,6 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
 
 class _LineChartPainter extends CustomPainter {
   final double sliderValue;
-  final double unitWidth;
-  final double shortWidth;
   final List<String> labels;
   final TextStyle activeStyle;
   final TextStyle inactiveStyle;
@@ -201,12 +197,11 @@ class _LineChartPainter extends CustomPainter {
   late Paint _circlePaint;
   late Paint _backgroundPaint;
   late Path _path;
+  late LinearGradient gradient;
 
   int get sliderIndex => sliderValue.toInt();
 
   _LineChartPainter({
-    this.unitWidth = 2,
-    this.shortWidth = 100,
     this.sliderValue = 0,
     this.labels = const [],
     this.activeStyle = const TextStyle(fontSize: 12, color: Colors.blue),
@@ -245,6 +240,12 @@ class _LineChartPainter extends CustomPainter {
 
     _backgroundPaint = Paint();
     _path = Path();
+
+    gradient = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: gradientColors,
+    );
   }
 
   bool _isActive(int index) => index <= sliderIndex;
@@ -312,8 +313,8 @@ class _LineChartPainter extends CustomPainter {
       _path.lineTo(offsetsAnim[i].value.dx, offsetsAnim[i].value.dy);
     }
 
-    // 绘制左边的短线
-    _path.lineTo(offsetsAnim.last.value.dx + shortWidth, offsetsAnim.last.value.dy);
+    // 绘制右边的短线
+    _path.lineTo(rightOffset.dx, rightOffset.dy);
     canvas.drawPath(_path, _inactiveLinePaint);
   }
 
@@ -333,6 +334,8 @@ class _LineChartPainter extends CustomPainter {
     if (sliderIndex + 1 < offsetsAnim.length) {
       _path.lineTo(offsetsAnim[sliderIndex].value.dx, offsetsAnim[sliderIndex + 1].value.dy);
     }
+    /// 本质上
+    final unitWidth = offsetsAnim[1].value.dx - offsetsAnim[0].value.dx;
     final sliderOffset = Offset(
       offsetsAnim[sliderIndex].value.dx + (sliderValue - sliderIndex) * unitWidth,
       offsetsAnim[(sliderIndex + 1) < offsetsAnim.length ? sliderIndex + 1 : sliderIndex].value.dy,
@@ -341,12 +344,7 @@ class _LineChartPainter extends CustomPainter {
     _path.lineTo(sliderOffset.dx, 0);
     _path.close();
 
-    _backgroundPaint.shader = LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: gradientColors,
-    ).createShader(_path.getBounds());
-
+    _backgroundPaint.shader = gradient.createShader(_path.getBounds());
     canvas.drawPath(_path, _backgroundPaint);
   }
 
@@ -379,7 +377,7 @@ class _LineChartPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (offsetsAnim.isEmpty) return;
     leftOffset = Offset(0, offsetsAnim[0].value.dy);
-    rightOffset = offsetsAnim.last.value + Offset(shortWidth, 0);
+    rightOffset = Offset(size.width, offsetsAnim.last.value.dy);
 
     /// 原点坐标移动到左下角
     canvas.scale(1, -1);
