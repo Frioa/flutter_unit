@@ -54,9 +54,11 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
   double shortWidth = 0.0; // 左右短边宽
   List<Offset> offsets = []; // 各点坐标
 
+  late int textZoomIndex = 0; // 播放缩小动画 index
+  late int textEnlargeIndex = 0; // 播放放大动画 index
   late AnimationController textController;
   late AnimationController chartController;
-  late List<Animation<double>> testAnimations;
+  late List<Animation<double>> textAnimations;
   late List<Animation<Offset>> chartAnimation;
   late Listenable repaint;
 
@@ -64,15 +66,17 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
   void initState() {
     super.initState();
     _initData();
-    testAnimations = [];
+    textAnimations = [];
     chartAnimation = [];
     textController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
     chartController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
+    for (int i = 0; i < offsets.length; i++) {
+      textAnimations.add(Tween<double>(begin: 1.0, end: 1).animate(textController));
+      chartAnimation.add(
+          Tween<Offset>(begin: Offset(offsets[i].dx, 0), end: offsets[i]).animate(chartController));
+    }
+
     repaint = Listenable.merge(<Listenable>[textController, chartController]);
-    offsets.forEach((e) {
-      testAnimations.add(Tween<double>(begin: 1.0, end: 1.0).animate(textController));
-      chartAnimation.add(Tween<Offset>(begin: Offset(e.dx, 0), end: e).animate(chartController));
-    });
     chartController.forward();
   }
 
@@ -110,28 +114,23 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
   }
 
   void _playTextAnim(LineChartAnim oldWidget) {
-    final oldIndex = oldWidget.sliderIndex;
-    final newIndex = widget.sliderIndex;
-    for (int i = 0; i < widget.labels.length; i++) {
-      if (i == oldIndex) {
-        testAnimations[oldIndex] = Tween<double>(
-          begin: testAnimations[oldIndex].value,
-          end: 1.0,
-        ).animate(textController);
-        continue;
-      }
-      if (i == newIndex) {
-        testAnimations[newIndex] = Tween<double>(
-          begin: testAnimations[newIndex].value,
-          end: _testAnimScale,
-        ).animate(textController);
-        continue;
-      }
-
-      testAnimations[i] = Tween<double>(begin: 1, end: 1).animate(textController);
+    if (textController.isAnimating) {
+      textAnimations[textZoomIndex] = Tween<double>(begin: 1, end: 1).animate(textController);
     }
+
+    textZoomIndex = oldWidget.sliderIndex;
+    textEnlargeIndex = widget.sliderIndex;
+
+    textAnimations[textZoomIndex] =
+        Tween<double>(begin: textAnimations[textZoomIndex].value, end: 1).animate(textController);
+    textAnimations[textEnlargeIndex] =
+        Tween<double>(begin: textAnimations[textEnlargeIndex].value, end: _testAnimScale)
+            .animate(textController);
+
     textController.reset();
-    textController.forward();
+    textController.forward().whenComplete(() {
+      textAnimations[textZoomIndex] = Tween<double>(begin: 1, end: 1).animate(textController);
+    });
   }
 
   void _playChartAnim() {
@@ -140,10 +139,16 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
     for (int i = 0; i < widget.values.length; i++) {
       chartAnimation[i] =
           Tween<Offset>(begin: chartAnimation[i].value, end: offsets[i]).animate(chartController);
-      testAnimations[i] = Tween<double>(begin: 1, end: 1).animate(textController);
     }
+    textAnimations[textEnlargeIndex] =
+        Tween<double>(begin: textAnimations[textEnlargeIndex].value, end: 1)
+            .animate(textController);
+
     chartController.reset();
     chartController.forward();
+    textController.forward().whenComplete(() {
+      textAnimations[textEnlargeIndex] = Tween<double>(begin: 1, end: 1).animate(textController);
+    });
   }
 
   @override
@@ -155,7 +160,7 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
         size: Size(widget.width, widget.height),
         painter: _LineChartPainter(
           labels: widget.labels,
-          testAnimations: testAnimations,
+          testAnimations: textAnimations,
           offsetsAnim: chartAnimation,
           sliderValue: widget.sliderValue,
           strokeWidth: widget.strokeWidth,
