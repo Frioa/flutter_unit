@@ -164,8 +164,7 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
           gradientColors: widget.gradientColors,
           activeColor: widget.activeColor,
           inactiveColor: widget.inactiveColor,
-          activeStyle: widget.labelStyle.copyWith(color: widget.activeColor),
-          inactiveStyle: widget.labelStyle.copyWith(color: widget.inactiveColor),
+          labelStyle: widget.labelStyle,
           repaint: repaint,
         ),
       ),
@@ -176,8 +175,7 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
 class _LineChartPainter extends CustomPainter {
   final double sliderValue;
   final List<String> labels;
-  final TextStyle activeStyle;
-  final TextStyle inactiveStyle;
+  final TextStyle labelStyle;
   final double strokeWidth;
   final double circleWidth;
   final double dottedLineWidth; // 默认虚线与实线宽度一样
@@ -190,6 +188,7 @@ class _LineChartPainter extends CustomPainter {
   Offset leftOffset = Offset.zero;
   Offset rightOffset = Offset.zero;
 
+  late int sliderIndex;
   late Paint _activeLinePaint;
   late Paint _inactiveLinePaint;
   late Paint _dottedLinePaint;
@@ -198,14 +197,13 @@ class _LineChartPainter extends CustomPainter {
   late Paint _backgroundPaint;
   late Path _path;
   late LinearGradient gradient;
-
-  int get sliderIndex => sliderValue.toInt();
+  late TextStyle activeStyle;
+  late TextStyle inactiveStyle;
 
   _LineChartPainter({
     this.sliderValue = 0,
     this.labels = const [],
-    this.activeStyle = const TextStyle(fontSize: 12, color: Colors.blue),
-    this.inactiveStyle = const TextStyle(fontSize: 12, color: Colors.grey),
+    this.labelStyle = const TextStyle(fontSize: 12, color: Colors.blue),
     this.strokeWidth = 3,
     this.circleWidth = 4,
     this.dottedLineWidth = 1.0,
@@ -216,6 +214,7 @@ class _LineChartPainter extends CustomPainter {
     this.offsetsAnim = const [],
     Listenable? repaint,
   }) : super(repaint: repaint) {
+    sliderIndex = sliderValue.toInt();
     _activeLinePaint = Paint();
     _activeLinePaint.color = activeColor;
     _activeLinePaint.strokeWidth = strokeWidth;
@@ -246,6 +245,8 @@ class _LineChartPainter extends CustomPainter {
       end: Alignment.bottomCenter,
       colors: gradientColors,
     );
+    activeStyle = labelStyle.copyWith(color: activeColor);
+    inactiveStyle = labelStyle.copyWith(color: inactiveColor);
   }
 
   bool _isActive(int index) => index <= sliderIndex;
@@ -334,7 +335,7 @@ class _LineChartPainter extends CustomPainter {
     if (sliderIndex + 1 < offsetsAnim.length) {
       _path.lineTo(offsetsAnim[sliderIndex].value.dx, offsetsAnim[sliderIndex + 1].value.dy);
     }
-    /// 本质上
+
     final unitWidth = offsetsAnim[1].value.dx - offsetsAnim[0].value.dx;
     final sliderOffset = Offset(
       offsetsAnim[sliderIndex].value.dx + (sliderValue - sliderIndex) * unitWidth,
@@ -362,10 +363,10 @@ class _LineChartPainter extends CustomPainter {
       textPainter.layout();
 
       canvas.save();
-      // 将原点坐标移动到每个点
+      // 将原点坐标移动到每个点, 并向上移动 textPainter.height / 2 * 1.25
       canvas.translate(
         offsetsAnim[i].value.dx,
-        -offsetsAnim[i].value.dy - textPainter.height / 2 * 1.25,
+        -offsetsAnim[i].value.dy - textPainter.height * 0.625,
       );
       // 在文字中心点绘制
       textPainter.paint(canvas, Offset(-textPainter.width / 2, -textPainter.height / 2));
