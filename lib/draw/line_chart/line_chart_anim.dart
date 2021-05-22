@@ -58,6 +58,7 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
   late AnimationController chartController;
   late List<Animation<double>> testAnimations;
   late List<Animation<Offset>> chartAnimation;
+  late Listenable repaint;
 
   @override
   void initState() {
@@ -67,8 +68,7 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
     chartAnimation = [];
     textController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
     chartController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
-    // TODO: repaint 如何传入两个 controller ？
-    chartController.addListener(() => setState(() {}));
+    repaint = Listenable.merge(<Listenable>[textController, chartController]);
     offsets.forEach((e) {
       testAnimations.add(Tween<double>(begin: 1.0, end: 1.0).animate(textController));
       chartAnimation.add(Tween<Offset>(begin: Offset(e.dx, 0), end: e).animate(chartController));
@@ -156,7 +156,6 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
         painter: _LineChartPainter(
           unitWidth: unitWidth,
           shortWidth: shortWidth,
-          controller: textController,
           labels: widget.labels,
           testAnimations: testAnimations,
           offsetsAnim: chartAnimation,
@@ -169,6 +168,7 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
           inactiveColor: widget.inactiveColor,
           activeStyle: widget.labelStyle.copyWith(color: widget.activeColor),
           inactiveStyle: widget.labelStyle.copyWith(color: widget.inactiveColor),
+          repaint: repaint,
         ),
       ),
     );
@@ -219,8 +219,8 @@ class _LineChartPainter extends CustomPainter {
     this.gradientColors = const [],
     this.testAnimations = const [],
     this.offsetsAnim = const [],
-    AnimationController? controller,
-  }) : super(repaint: controller) {
+    Listenable? repaint,
+  }) : super(repaint: repaint) {
     _activeLinePaint = Paint();
     _activeLinePaint.color = activeColor;
     _activeLinePaint.strokeWidth = strokeWidth;
