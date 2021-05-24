@@ -399,7 +399,5 @@ class _LineChartPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _LineChartPainter oldDelegate) {
-    return sliderValue != oldDelegate.sliderValue || !offsetsAnim[0].isDismissed;
-  }
+  bool shouldRepaint(covariant _LineChartPainter oldDelegate) => false;
 }
