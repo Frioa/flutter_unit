@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 class LineChartAnim extends StatefulWidget {
@@ -37,7 +38,10 @@ class LineChartAnim extends StatefulWidget {
 
   int get sliderIndex => sliderValue.toInt();
 
-  double get maxValue => values.reduce((v1, v2) => v1 > v2 ? v1 : v2);
+  double get maxValue {
+    if (values.isEmpty) return 0.0;
+    return values.reduce((v1, v2) => v1 > v2 ? v1 : v2);
+  }
 
   @override
   _LineChartAnimState createState() => _LineChartAnimState();
@@ -86,7 +90,7 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
     if (oldWidget.sliderValue != widget.sliderValue) {
       _playTextAnim(oldWidget);
     }
-    if (oldWidget.values != widget.values) {
+    if (!const ListEquality().equals(oldWidget.values, widget.values)) {
       _playChartAnim();
     }
   }
@@ -114,6 +118,8 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
   }
 
   void _playTextAnim(LineChartAnim oldWidget) {
+    if (widget.sliderIndex == oldWidget.sliderIndex) return;
+
     if (textController.isAnimating) {
       textAnimations[textZoomIndex] = Tween<double>(begin: 1, end: 1).animate(textController);
     }
@@ -399,5 +405,6 @@ class _LineChartPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _LineChartPainter oldDelegate) => false;
+  bool shouldRepaint(covariant _LineChartPainter oldDelegate) =>
+      sliderValue != oldDelegate.sliderValue;
 }
