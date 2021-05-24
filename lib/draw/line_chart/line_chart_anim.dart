@@ -81,7 +81,10 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
     }
 
     repaint = Listenable.merge(<Listenable>[textController, chartController]);
-    chartController.forward();
+    chartController.forward().whenComplete(() {
+      textAnimations[widget.sliderIndex] = Tween<double>(begin: 1.0, end: _testAnimScale).animate(textController);
+      textController.forward();
+    });
   }
 
   @override
