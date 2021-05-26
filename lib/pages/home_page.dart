@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_unit/page/draw/loading_page.dart';
-import 'package:flutter_unit/page/pages.dart';
+import 'package:flutter_unit/pages/draw/loading_page.dart';
+import 'package:flutter_unit/pages/pages.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -50,6 +50,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LineChartPage()),
+                );
+              },
+            ),
+            CupertinoButton(
+              child: Text('ffi'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FfiPage()),
                 );
               },
             ),
