@@ -23,8 +23,6 @@ class RadarChartWidget extends StatefulWidget {
       list.add(max);
     }
 
-
-
     return RadarChart(values: list);
   }
 
@@ -111,7 +109,7 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
   void updateData(RadarChartWidget oldWidget) {
     radius = widget.size.height / 2;
     final sideLength = 2 * radius * sin(pi / polygonSide);
-    // 边数为奇数边时，需要计算原点坐标偏移量
+    // 边数为奇数边时，需要计算原点坐标偏移量，让其居中。
     origin = Offset(
         0,
         polygonSide % 2 == 0
@@ -336,10 +334,8 @@ class _RadarChartPainter extends CustomPainter {
     _drawBaseRadarChar(canvas, size);
     // 绘制内部虚线
     _drawInnerNetShape(canvas, size);
-
     /// 绘制数据模型
     _drawRadarCharList(canvas, size);
-
     /// 绘制坐标系文案
     _drawText(canvas, size);
   }

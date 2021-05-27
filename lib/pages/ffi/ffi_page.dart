@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:native_add/native_add.dart';
+import 'package:native_add/native_add.dart'
+    if (dart.library.html) 'package:native_add/native_add_web.dart';
 
 class FfiPage extends StatefulWidget {
   const FfiPage({Key? key}) : super(key: key);
