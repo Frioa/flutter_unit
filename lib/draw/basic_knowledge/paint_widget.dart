@@ -62,6 +62,19 @@ class _PaintWidgetState extends State<PaintWidget> with PaintMixin {
               padding: EdgeInsets.symmetric(vertical: 8.sp),
             ),
 
+            MarkDownBodyWidget(
+                '**3. 线接类型 strokeMiterLimit**\n\n<br>'
+                    '>`strokeMiterLimit只适用于【StrokeJoin.miter】。`\n'
+                    '>它是一个对斜接的限定，如果超过阈值，会变成【StrokeJoin.bevel】。 \n'
+                    '>因为考虑到锐角太尖，会影响视觉。\n'
+                    ''),
+
+            buildCustomPaint(
+              type: PaintWidgetType.strokeMiterLimit,
+              size: Size(L.screenWidth, 350),
+              padding: EdgeInsets.symmetric(vertical: 8.sp),
+            ),
+
           ],
         ),
       ),

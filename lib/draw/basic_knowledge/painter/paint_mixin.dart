@@ -6,6 +6,7 @@ enum PaintWidgetType {
   stroke,
   strokeCap,
   strokeJoin,
+  strokeMiterLimit,
 }
 
 mixin PaintMixin {
@@ -19,6 +20,8 @@ mixin PaintMixin {
         return CustomPaint(painter: StrokeCapPainter(), size: size);
       case PaintWidgetType.strokeJoin:
         return CustomPaint(painter: StrokeJoinPainter(), size: size);
+      case PaintWidgetType.strokeMiterLimit:
+        return CustomPaint(painter: StrokeMiterLimit(), size: size);
     }
   }
 
