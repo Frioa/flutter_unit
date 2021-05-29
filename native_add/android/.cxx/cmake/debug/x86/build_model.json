@@ -5,9 +5,9 @@
     "environmentVariables": []
   },
   "cmake": {
-    "cmakeArtifactsBaseFolder": "/Users/yueqi/Project/flutter_unit/native_add/android/.cxx/cmake/debug/x86",
-    "cmakeServerLogFile": "/Users/yueqi/Project/flutter_unit/native_add/android/.cxx/cmake/debug/x86/cmake_server_log.txt",
-    "cmakeWrappingBaseFolder": "/Users/yueqi/Project/flutter_unit/native_add/android/.cxx/cxx/debug/x86",
+    "cmakeArtifactsBaseFolder": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\.cxx\\cmake\\debug\\x86",
+    "cmakeServerLogFile": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\.cxx\\cmake\\debug\\x86\\cmake_server_log.txt",
+    "cmakeWrappingBaseFolder": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\.cxx\\cxx\\debug\\x86",
     "effectiveConfiguration": {
       "name": "traditional-android-studio-cmake-environment",
       "description": "Composite reified CMakeSettings configuration",
@@ -15,13 +15,13 @@
       "inheritEnvironments": [
         "ndk"
       ],
-      "buildRoot": "/Users/yueqi/Project/flutter_unit/native_add/android/.cxx/cmake/debug/x86",
-      "cmakeToolchain": "/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462/build/cmake/android.toolchain.cmake",
-      "cmakeExecutable": "/Users/yueqi/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake",
+      "buildRoot": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\.cxx\\cmake\\debug\\x86",
+      "cmakeToolchain": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\ndk\\21.1.6352462\\build\\cmake\\android.toolchain.cmake",
+      "cmakeExecutable": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\cmake.exe",
       "variables": [
         {
           "name": "CMAKE_FIND_ROOT_PATH",
-          "value": "/Users/yueqi/Project/flutter_unit/native_add/android/.cxx/cmake/debug/prefab/x86/prefab"
+          "value": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\.cxx\\cmake\\debug\\prefab\\x86\\prefab"
         },
         {
           "name": "CMAKE_BUILD_TYPE",
@@ -29,7 +29,7 @@
         },
         {
           "name": "CMAKE_TOOLCHAIN_FILE",
-          "value": "/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462/build/cmake/android.toolchain.cmake"
+          "value": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\ndk\\21.1.6352462\\build\\cmake\\android.toolchain.cmake"
         },
         {
           "name": "ANDROID_ABI",
@@ -37,7 +37,7 @@
         },
         {
           "name": "ANDROID_NDK",
-          "value": "/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462"
+          "value": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\ndk\\21.1.6352462"
         },
         {
           "name": "ANDROID_PLATFORM",
@@ -49,7 +49,7 @@
         },
         {
           "name": "CMAKE_ANDROID_NDK",
-          "value": "/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462"
+          "value": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\ndk\\21.1.6352462"
         },
         {
           "name": "CMAKE_EXPORT_COMPILE_COMMANDS",
@@ -57,11 +57,11 @@
         },
         {
           "name": "CMAKE_LIBRARY_OUTPUT_DIRECTORY",
-          "value": "/Users/yueqi/Project/flutter_unit/build/native_add/intermediates/cmake/debug/obj/x86"
+          "value": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\build\\native_add\\intermediates\\cmake\\debug\\obj\\x86"
         },
         {
           "name": "CMAKE_MAKE_PROGRAM",
-          "value": "/Users/yueqi/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja"
+          "value": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe"
         },
         {
           "name": "CMAKE_SYSTEM_NAME",
@@ -74,14 +74,14 @@
       ]
     }
   },
-  "cxxBuildFolder": "/Users/yueqi/Project/flutter_unit/native_add/android/.cxx/cmake/debug/x86",
+  "cxxBuildFolder": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\.cxx\\cmake\\debug\\x86",
   "info": {
     "abi": "X86",
     "bitness": 32,
     "deprecated": false,
     "default": true
   },
-  "originalCxxBuildFolder": "/Users/yueqi/Project/flutter_unit/native_add/android/.cxx/cmake/debug/x86",
+  "originalCxxBuildFolder": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\.cxx\\cmake\\debug\\x86",
   "variant": {
     "buildSystemArgumentList": [],
     "buildTargetSet": [],
@@ -93,24 +93,24 @@
     "module": {
       "buildSystem": "CMAKE",
       "cmake": {
-        "cmakeExe": "/Users/yueqi/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake",
+        "cmakeExe": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\cmake.exe",
         "minimumCmakeVersion": "3.10.2",
-        "ninjaExe": "/Users/yueqi/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja"
+        "ninjaExe": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe"
       },
-      "cmakeToolchainFile": "/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462/build/cmake/android.toolchain.cmake",
-      "cxxFolder": "/Users/yueqi/Project/flutter_unit/native_add/android/.cxx",
+      "cmakeToolchainFile": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\ndk\\21.1.6352462\\build\\cmake\\android.toolchain.cmake",
+      "cxxFolder": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\.cxx",
       "gradleModulePathName": ":native_add",
-      "intermediatesFolder": "/Users/yueqi/Project/flutter_unit/build/native_add/intermediates",
-      "makeFile": "/Users/yueqi/Project/flutter_unit/native_add/android/CMakeLists.txt",
-      "moduleBuildFile": "/Users/yueqi/Project/flutter_unit/native_add/android/build.gradle",
-      "moduleRootFolder": "/Users/yueqi/Project/flutter_unit/native_add/android",
+      "intermediatesFolder": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\build\\native_add\\intermediates",
+      "makeFile": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\CMakeLists.txt",
+      "moduleBuildFile": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\build.gradle",
+      "moduleRootFolder": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android",
       "ndkDefaultAbiList": [
         "ARMEABI_V7A",
         "ARM64_V8A",
         "X86",
         "X86_64"
       ],
-      "ndkFolder": "/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462",
+      "ndkFolder": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\ndk\\21.1.6352462",
       "ndkMetaAbiList": [
         {
           "abi": "ARMEABI_V7A",
@@ -167,29 +167,29 @@
       "ndkDefaultStl": "LIBCXX_STATIC",
       "ndkVersion": "21.1.6352462",
       "project": {
-        "compilerSettingsCacheFolder": "/Users/yueqi/Project/flutter_unit/android/.cxx",
-        "cxxFolder": "/Users/yueqi/Project/flutter_unit/android/.cxx",
+        "compilerSettingsCacheFolder": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\android\\.cxx",
+        "cxxFolder": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\android\\.cxx",
         "isBuildOnlyTargetAbiEnabled": true,
         "isCmakeBuildCohabitationEnabled": false,
         "isNativeCompilerSettingsCacheEnabled": false,
-        "rootBuildGradleFolder": "/Users/yueqi/Project/flutter_unit/android",
-        "sdkFolder": "/Users/yueqi/Library/Android/sdk",
+        "rootBuildGradleFolder": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\android",
+        "sdkFolder": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk",
         "isPrefabEnabled": false
       },
       "splitsAbiFilterSet": [],
       "stlSharedObjectMap": {
         "LIBCXX_SHARED": {
-          "ARMEABI_V7A": "/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi/libc++_shared.so",
-          "ARM64_V8A": "/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/libc++_shared.so",
-          "X86": "/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/i686-linux-android/libc++_shared.so",
-          "X86_64": "/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++_shared.so"
+          "ARMEABI_V7A": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\ndk\\21.1.6352462\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\arm-linux-androideabi\\libc++_shared.so",
+          "ARM64_V8A": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\ndk\\21.1.6352462\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\aarch64-linux-android\\libc++_shared.so",
+          "X86": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\ndk\\21.1.6352462\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\i686-linux-android\\libc++_shared.so",
+          "X86_64": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\ndk\\21.1.6352462\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\x86_64-linux-android\\libc++_shared.so"
         },
         "LIBCXX_STATIC": {},
         "NONE": {},
         "SYSTEM": {}
       }
     },
-    "objFolder": "/Users/yueqi/Project/flutter_unit/build/native_add/intermediates/cmake/debug/obj",
+    "objFolder": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\build\\native_add\\intermediates\\cmake\\debug\\obj",
     "variantName": "debug",
     "validAbiList": [
       "ARMEABI_V7A",
@@ -197,8 +197,8 @@
       "X86",
       "X86_64"
     ],
-    "prefabDirectory": "/Users/yueqi/Project/flutter_unit/native_add/android/.cxx/cmake/debug/prefab",
+    "prefabDirectory": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\.cxx\\cmake\\debug\\prefab",
     "prefabPackageDirectoryList": []
   },
-  "prefabFolder": "/Users/yueqi/Project/flutter_unit/native_add/android/.cxx/cmake/debug/prefab/x86"
+  "prefabFolder": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\.cxx\\cmake\\debug\\prefab\\x86"
 }

@@ -1,19 +1,19 @@
 {
   "buildFiles": [
-    "/Users/yueqi/Project/flutter_unit/native_add/android/CMakeLists.txt",
-    "/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462/build/cmake/android.toolchain.cmake",
-    "/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462/build/cmake/platforms.cmake"
+    "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\CMakeLists.txt",
+    "C:\\Users\\YueQi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\build\\cmake\\android.toolchain.cmake",
+    "C:\\Users\\YueQi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\build\\cmake\\platforms.cmake"
   ],
   "cleanCommands": [
-    "/Users/yueqi/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja -C \"/Users/yueqi/Project/flutter_unit/native_add/android/.cxx/cmake/debug/arm64-v8a\" clean"
+    "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\.cxx\\cmake\\debug\\arm64-v8a\" clean"
   ],
-  "buildTargetsCommand": "/Users/yueqi/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja  -C \"/Users/yueqi/Project/flutter_unit/native_add/android/.cxx/cmake/debug/arm64-v8a\" {LIST_OF_TARGETS_TO_BUILD}",
+  "buildTargetsCommand": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe  -C \"C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\.cxx\\cmake\\debug\\arm64-v8a\" {LIST_OF_TARGETS_TO_BUILD}",
   "libraries": {
     "native_add-Debug-arm64-v8a": {
       "artifactName": "native_add",
-      "buildCommand": "/Users/yueqi/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja -C \"/Users/yueqi/Project/flutter_unit/native_add/android/.cxx/cmake/debug/arm64-v8a\" native_add",
+      "buildCommand": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\.cxx\\cmake\\debug\\arm64-v8a\" native_add",
       "abi": "arm64-v8a",
-      "output": "/Users/yueqi/Project/flutter_unit/build/native_add/intermediates/cmake/debug/obj/arm64-v8a/libnative_add.so",
+      "output": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\build\\native_add\\intermediates\\cmake\\debug\\obj\\arm64-v8a\\libnative_add.so",
       "runtimeFiles": []
     }
   }

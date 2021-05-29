@@ -1,39 +1,39 @@
 {
   "stringTable": {
-    "0": "/Users/yueqi/Project/flutter_unit/native_add/android/.cxx/cmake/debug/x86_64",
-    "1": "--target=x86_64-none-linux-android21 --gcc-toolchain=/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dnative_add_EXPORTS -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -O0 -fno-limit-debug-info -fPIC"
+    "0": "C:/Users/YueQi/AndroidStudioProjects/flutter_unit/native_add/android/.cxx/cmake/debug/x86_64",
+    "1": "--target=x86_64-none-linux-android21 --gcc-toolchain=C:/Users/YueQi/AppData/Local/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/YueQi/AppData/Local/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/windows-x86_64/sysroot -Dnative_add_EXPORTS -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -O0 -fno-limit-debug-info -fPIC"
   },
   "buildFiles": [
-    "/Users/yueqi/Project/flutter_unit/native_add/android/CMakeLists.txt",
-    "/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462/build/cmake/android.toolchain.cmake",
-    "/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462/build/cmake/platforms.cmake"
+    "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\CMakeLists.txt",
+    "C:\\Users\\YueQi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\build\\cmake\\android.toolchain.cmake",
+    "C:\\Users\\YueQi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\build\\cmake\\platforms.cmake"
   ],
   "cleanCommands": [
-    "/Users/yueqi/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja -C \"/Users/yueqi/Project/flutter_unit/native_add/android/.cxx/cmake/debug/x86_64\" clean"
+    "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\.cxx\\cmake\\debug\\x86_64\" clean"
   ],
-  "buildTargetsCommand": "/Users/yueqi/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja  -C \"/Users/yueqi/Project/flutter_unit/native_add/android/.cxx/cmake/debug/x86_64\" {LIST_OF_TARGETS_TO_BUILD}",
+  "buildTargetsCommand": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe  -C \"C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\.cxx\\cmake\\debug\\x86_64\" {LIST_OF_TARGETS_TO_BUILD}",
   "libraries": {
     "native_add-Debug-x86_64": {
-      "buildCommand": "/Users/yueqi/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja -C \"/Users/yueqi/Project/flutter_unit/native_add/android/.cxx/cmake/debug/x86_64\" native_add",
+      "buildCommand": "C:\\Users\\YueQi\\AppData\\Local\\Android\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\android\\.cxx\\cmake\\debug\\x86_64\" native_add",
       "buildType": "debug",
-      "toolchain": "3592837404",
+      "toolchain": "3355631875",
       "abi": "x86_64",
       "artifactName": "native_add",
       "files": [
         {
-          "src": "/Users/yueqi/Project/flutter_unit/native_add/ios/Classes/native_add.cpp",
+          "src": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\native_add\\ios\\Classes\\native_add.cpp",
           "flagsOrdinal": 1,
           "workingDirectoryOrdinal": 0
         }
       ],
       "headers": [],
-      "output": "/Users/yueqi/Project/flutter_unit/build/native_add/intermediates/cmake/debug/obj/x86_64/libnative_add.so",
+      "output": "C:\\Users\\YueQi\\AndroidStudioProjects\\flutter_unit\\build\\native_add\\intermediates\\cmake\\debug\\obj\\x86_64\\libnative_add.so",
       "runtimeFiles": []
     }
   },
   "toolchains": {
-    "3592837404": {
-      "cppCompilerExecutable": "/Users/yueqi/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++"
+    "3355631875": {
+      "cppCompilerExecutable": "C:\\Users\\YueQi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe"
     }
   },
   "cFileExtensions": [],

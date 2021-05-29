@@ -1,3 +1,3 @@
 # ninja log v5
-0	46	1622081499	CMakeFiles/native_add.dir/Users/yueqi/Project/flutter_unit/native_add/ios/Classes/native_add.cpp.o	a84958d3225eb939
-46	81	1622081499	/Users/yueqi/Project/flutter_unit/build/native_add/intermediates/cmake/debug/obj/arm64-v8a/libnative_add.so	c595e876a93c15e6
+0	66	643961896	CMakeFiles/native_add.dir/C_/Users/YueQi/AndroidStudioProjects/flutter_unit/native_add/ios/Classes/native_add.cpp.o	a3935c6d4aeaa823
+67	138	643961896	C:/Users/YueQi/AndroidStudioProjects/flutter_unit/build/native_add/intermediates/cmake/debug/obj/arm64-v8a/libnative_add.so	7d90691b09ba8f1e

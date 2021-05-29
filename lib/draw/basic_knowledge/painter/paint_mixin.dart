@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_unit/draw/basic_knowledge/painter/painter.dart';
-import 'package:flutter_unit/draw/basic_knowledge/painter/stroke_cap.dart';
 
 enum PaintWidgetType {
   antiAlias,
   stroke,
   strokeCap,
+  strokeJoin,
 }
 
 mixin PaintMixin {
@@ -17,6 +17,8 @@ mixin PaintMixin {
         return StrokePainterWidget(size: size);
       case PaintWidgetType.strokeCap:
         return CustomPaint(painter: StrokeCapPainter(), size: size);
+      case PaintWidgetType.strokeJoin:
+        return CustomPaint(painter: StrokeJoinPainter(), size: size);
     }
   }
 

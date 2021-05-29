@@ -49,7 +49,19 @@ class _PaintWidgetState extends State<PaintWidget> with PaintMixin {
               padding: EdgeInsets.symmetric(vertical: 8.sp),
             ),
 
-            SizedBox(height: 16.sp),
+            MarkDownBodyWidget(
+                '**2. 线接类型 strokeJoin**\n\n<br>'
+                '`线接类型只适用于Path的线段绘制。它不适用于用【Canvas.drawPoints】绘制的线。`\n'
+                '> - StrokeJoin.bevel - 斜角\n'
+                '> - StrokeJoin.miter - 锐角\n'
+                '> - StrokeJoin.round - 圆角\n'
+                ''),
+            buildCustomPaint(
+              type: PaintWidgetType.strokeJoin,
+              size: Size(L.screenWidth, 120),
+              padding: EdgeInsets.symmetric(vertical: 8.sp),
+            ),
+
           ],
         ),
       ),
