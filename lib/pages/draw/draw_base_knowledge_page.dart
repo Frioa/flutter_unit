@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_unit/draw/basic_knowledge/canvas/canvas.dart';
 import 'package:flutter_unit/draw/draws.dart';
 
 class DrawBaseKnowledgePage extends StatefulWidget {
@@ -19,6 +20,12 @@ class _DrawBaseKnowledgePageState extends State<DrawBaseKnowledgePage> {
               child: Text('Paint 篇'),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => PaintWidget()));
+              },
+            ),
+            CupertinoButton(
+              child: Text('Canvas 篇'),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CanvasWidget()));
               },
             ),
           ],

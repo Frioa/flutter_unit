@@ -20,7 +20,7 @@ class LineChartWidget extends StatefulWidget {
 
 class _LineChartWidgetState extends State<LineChartWidget> {
   double value = 0;
-  bool x= true;
+  bool x = false;
   List<double> values = [2.0, 1.7, 1.4, 1.0, 0.75, 0.5, 0.5];
 
   @override
@@ -55,16 +55,15 @@ class _LineChartWidgetState extends State<LineChartWidget> {
             },
           ),
           CupertinoButton(
-            child: Text('data'),
+            child: Text('初始化'),
             onPressed: () {
               if (x) {
                 values = [2.0, 1.7, 1.4, 1.0, 0.75, 0.5, 0.5];
-              }else {
+              } else {
                 values = [.0, .0, .0, .0, 0.0, 0.0, 0.0];
               }
               x = !x;
-              setState(() {
-              });
+              setState(() {});
             },
           ),
         ],

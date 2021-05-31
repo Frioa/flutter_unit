@@ -1,1 +1,1 @@
-export 'paint_widget.dart';
+export 'painter/paint_widget.dart';
