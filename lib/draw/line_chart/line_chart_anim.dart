@@ -82,7 +82,8 @@ class _LineChartAnimState extends State<LineChartAnim> with TickerProviderStateM
 
     repaint = Listenable.merge(<Listenable>[textController, chartController]);
     chartController.forward().whenComplete(() {
-      textAnimations[widget.sliderIndex] = Tween<double>(begin: 1.0, end: _testAnimScale).animate(textController);
+      textAnimations[widget.sliderIndex] =
+          Tween<double>(begin: 1.0, end: _testAnimScale).animate(textController);
       textController.forward();
     });
   }
@@ -252,6 +253,7 @@ class _LineChartPainter extends CustomPainter {
     _circlePaint.style = PaintingStyle.fill;
 
     _backgroundPaint = Paint();
+    _backgroundPaint.style = PaintingStyle.fill;
     _path = Path();
 
     gradient = LinearGradient(
@@ -296,67 +298,30 @@ class _LineChartPainter extends CustomPainter {
   }
 
   void drawActiveLine(Canvas canvas, Size size) {
-    // 绘制左边的短线
     _path.reset();
-    _path.moveTo(leftOffset.dx, leftOffset.dy);
-    _path.lineTo(offsetsAnim[0].value.dx, offsetsAnim[0].value.dy);
-
-    for (int i = 1; i < offsetsAnim.length; i++) {
-      final pre = offsetsAnim[i - 1].value;
-      final cur = offsetsAnim[i].value;
-      final mid = Offset(pre.dx, cur.dy);
-
-      _path.lineTo(mid.dx, mid.dy);
-      _path.lineTo(cur.dx, cur.dy);
+    _path.moveTo(offsetsAnim[0].value.dx, offsetsAnim[0].value.dy);
+    for (int i = 1; i <= sliderIndex; i++) {
+      _path.lineTo(offsetsAnim[i].value.dx, offsetsAnim[i].value.dy);
     }
-    // 绘制右边的短线
-    _path.lineTo(rightOffset.dx, rightOffset.dy);
     canvas.drawPath(_path, _activeLinePaint);
   }
 
   void drawInactiveLine(Canvas canvas, Size size) {
-    if (sliderIndex + 1 >= offsetsAnim.length) return;
-
     _path.reset();
-    _path.moveTo(offsetsAnim[sliderIndex].value.dx, offsetsAnim[sliderIndex + 1].value.dy);
-    for (int i = sliderIndex + 1; i < offsetsAnim.length; i++) {
-      final pre = offsetsAnim[i - 1].value;
-      final cur = offsetsAnim[i].value;
-      final mid = Offset(pre.dx, cur.dy);
-
-      _path.lineTo(mid.dx, mid.dy);
+    _path.moveTo(offsetsAnim[0].value.dx, offsetsAnim[0].value.dy);
+    for (int i = 1; i < offsetsAnim.length; i++) {
       _path.lineTo(offsetsAnim[i].value.dx, offsetsAnim[i].value.dy);
     }
-
-    // 绘制右边的短线
-    _path.lineTo(rightOffset.dx, rightOffset.dy);
     canvas.drawPath(_path, _inactiveLinePaint);
   }
 
   void drawBackground(Canvas canvas, Size size) {
     _path.reset();
-    _path.moveTo(0, 0);
-    _path.lineTo(leftOffset.dx, leftOffset.dy);
-    _path.lineTo(offsetsAnim[0].value.dx, offsetsAnim[0].value.dy);
-
-    for (int i = 1; i <= sliderIndex; i++) {
-      final pre = offsetsAnim[i - 1].value;
-      final cur = offsetsAnim[i].value;
-      final mid = Offset(pre.dx, cur.dy);
-      _path.lineTo(mid.dx, mid.dy);
+    _path.moveTo(offsetsAnim[0].value.dx, 0);
+    for (int i = 0; i <= sliderIndex; i++) {
       _path.lineTo(offsetsAnim[i].value.dx, offsetsAnim[i].value.dy);
     }
-    if (sliderIndex + 1 < offsetsAnim.length) {
-      _path.lineTo(offsetsAnim[sliderIndex].value.dx, offsetsAnim[sliderIndex + 1].value.dy);
-    }
-
-    final unitWidth = offsetsAnim[1].value.dx - offsetsAnim[0].value.dx;
-    final sliderOffset = Offset(
-      offsetsAnim[sliderIndex].value.dx + (sliderValue - sliderIndex) * unitWidth,
-      offsetsAnim[(sliderIndex + 1) < offsetsAnim.length ? sliderIndex + 1 : sliderIndex].value.dy,
-    );
-    _path.lineTo(sliderOffset.dx, sliderOffset.dy);
-    _path.lineTo(sliderOffset.dx, 0);
+    _path.lineTo(offsetsAnim[sliderIndex].value.dx, 0);
     _path.close();
 
     _backgroundPaint.shader = gradient.createShader(_path.getBounds());
@@ -380,7 +345,7 @@ class _LineChartPainter extends CustomPainter {
       // 将原点坐标移动到每个点, 并向上移动 textPainter.height / 2 * 1.25
       canvas.translate(
         offsetsAnim[i].value.dx,
-        -offsetsAnim[i].value.dy - textPainter.height * 0.625,
+        -offsetsAnim[i].value.dy - textPainter.height / 2 * 1.5,
       );
       // 在文字中心点绘制
       textPainter.paint(canvas, Offset(-textPainter.width / 2, -textPainter.height / 2));
@@ -401,8 +366,8 @@ class _LineChartPainter extends CustomPainter {
 
     drawBackground(canvas, size);
     drawDottedLine(canvas, size);
-    drawActiveLine(canvas, size);
     drawInactiveLine(canvas, size);
+    drawActiveLine(canvas, size);
     drawDots(canvas, size);
     drawTextLabels(canvas, size);
   }

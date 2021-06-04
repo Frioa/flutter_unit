@@ -39,8 +39,8 @@ class _LineChartWidgetState extends State<LineChartWidget> {
           LineChartAnim(
             values: values,
             width: 288,
-            height: 292,
-            labels: values.map((e) => '$e%').toList(),
+            height: 100,
+            labels: values.map((e) => '$e').toList(),
             sliderValue: value,
           ),
           Slider(
@@ -58,7 +58,7 @@ class _LineChartWidgetState extends State<LineChartWidget> {
             child: Text('初始化'),
             onPressed: () {
               if (x) {
-                values = [2.0, 1.7, 1.4, 1.0, 0.75, 0.5, 0.5];
+                values = [1.0, 2, 1, 3,1, 3, 6];
               } else {
                 values = [.0, .0, .0, .0, 0.0, 0.0, 0.0];
               }

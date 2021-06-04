@@ -7,8 +7,6 @@ class LineChartPage extends StatefulWidget {
 }
 
 class _LineChartPageState extends State<LineChartPage> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
