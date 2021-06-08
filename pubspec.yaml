@@ -6,6 +6,9 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
+parameters:
+  private_pub_server: &private_pub_server "http://pubserver:7878"
+
 dependencies:
   flutter:
     sdk: flutter
@@ -20,9 +23,19 @@ dependencies:
 
   flutter_screenutil: ^5.0.0+2
 
+  #  jd_face:
+  #    version: 0.0.3+1
+  #    hosted:
+  #      name: jd_face
+  #      url: *private_pub_server
+
 
   native_add:
     path: native_add
+
+
+  opencv_plugin:
+    path: opencv_plugin
 
 dev_dependencies:
   flutter_test:
