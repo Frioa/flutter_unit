@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:native_add/native_add.dart'
@@ -19,7 +21,7 @@ class _FfiPageState extends State<FfiPage> {
         child: CupertinoButton(
           child: Text('a+b'),
           onPressed: () {
-            print('NativeAdd  ${NativeAdd.nativeAdd(2, 5)}');
+            DynamicLibrary.open("libopencv_java4.so");
           },
         ),
       ),
