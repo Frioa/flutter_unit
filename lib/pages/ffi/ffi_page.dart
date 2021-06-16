@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:native_add/native_add.dart'
     if (dart.library.html) 'package:native_add/native_add_web.dart';
+import 'package:opencv_plugin/opencv_plugin.dart';
 
 class FfiPage extends StatefulWidget {
   const FfiPage({Key? key}) : super(key: key);
@@ -17,13 +18,23 @@ class _FfiPageState extends State<FfiPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(('ffi'))),
-      body: Container(
-        child: CupertinoButton(
-          child: Text('a+b'),
-          onPressed: () {
-            DynamicLibrary.open("libopencv_java4.so");
-          },
-        ),
+      body: Column(
+        children: [
+          CupertinoButton(
+            child: Text('a+b'),
+            onPressed: () {
+
+              final ret = OpencvPlugin.add(1, 1);
+              print('object $ret');
+            },
+          ),
+          CupertinoButton(
+            child: Text('111'),
+            onPressed: () {
+              final ret = OpencvPlugin.rectangle();
+            },
+          ),
+        ],
       ),
     );
   }

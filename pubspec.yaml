@@ -33,7 +33,6 @@ dependencies:
   native_add:
     path: native_add
 
-
   opencv_plugin:
     path: opencv_plugin
 
@@ -44,3 +43,6 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+  assets:
+    - assets/
