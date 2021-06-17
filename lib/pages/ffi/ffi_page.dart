@@ -44,7 +44,8 @@ class _FfiPageState extends State<FfiPage> {
           CupertinoButton(
             child: Text('111'),
             onPressed: () {
-              final ret = OpencvPlugin.blur(uint8list!);
+              uint8list = OpencvPlugin.blur(uint8list!);
+              setState(() {});
             },
           ),
           if (uint8list != null) Image.memory(uint8list!),

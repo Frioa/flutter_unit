@@ -12,8 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  opencv_4: ^1.0.0
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -18,25 +18,32 @@ class OpencvPlugin {
     return version;
   }
 
-  static void blur(Uint8List list) {
+  static Uint8List? blur(Uint8List list) {
     //The Uint8List lives in the Dart heap, which is garbage collected, and the objects might be moved around by the garbage collector.
     // So, you'll have to convert it into a pointer into the C heap.
     Pointer<Uint8> bytes = malloc.allocate<Uint8>(list.length);
     for (int i = 0; i < list.length; i++) {
       bytes.elementAt(i).value = list[i];
     }
-    final imgLengthBytes = malloc.allocate<Int32>(1);
-    print('object ${list.sublist(0, 100)}');
+    final imgLengthBytes = malloc.allocate<Int32>(1)..value = list.length;
 
-    final Mat Function(Pointer<Uint8> bytes, Pointer<Int32> imgLengthBytes, int kernelSize) blur =
+    final Pointer<Uint8> Function(
+            Pointer<Uint8> bytes, Pointer<Int32> imgLengthBytes, int kernelSize) blur =
         _opencvLib
             .lookup<
                 NativeFunction<
-                    Mat Function(Pointer<Uint8> bytes, Pointer<Int32> imgLengthBytes,
+                    Pointer<Uint8> Function(Pointer<Uint8> bytes, Pointer<Int32> imgLengthBytes,
                         Int32 kernelSize)>>("opencv_blur")
             .asFunction();
 
-    blur(bytes, imgLengthBytes, 10);
+    final newBytes = blur(bytes, imgLengthBytes, 15);
+    if (newBytes == nullptr) return null;
+
+    var newList = newBytes.asTypedList(imgLengthBytes.value);
+
+    malloc.free(bytes);
+    malloc.free(imgLengthBytes);
+    return newList;
   }
 
   static int add(int a, int b) {
