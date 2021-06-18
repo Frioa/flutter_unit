@@ -28,7 +28,7 @@ dependencies:
   #    hosted:
   #      name: jd_face
   #      url: *private_pub_server
-
+  ffi: ^1.1.2
 
   native_add:
     path: native_add

@@ -1,32 +1,91 @@
 #include <jni.h>
 #include <string>
 #include<opencv2/opencv.hpp>
-#include <stdint.h>
+#include <android/log.h>
+
+#define ATTRIBUTES extern "C" __attribute__((visibility("default"))) __attribute__((used))
+
+#define DEBUG_NATIVE true
 
 using namespace cv;
 
-struct MyMat {
-    int flags;
-    //! the matrix dimensionality, >= 2
-    int dims;
-    //! the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
-    int rows, cols;
-    //! pointer to the data
-    uchar* data;
-};
-
-extern "C" __attribute__((visibility("default"))) __attribute__((used))
+ATTRIBUTES
 int32_t native_add(int32_t x, int32_t y) {
     return x + y;
 }
 
-extern "C" __attribute__((visibility("default"))) __attribute__((used))
-MyMat mat() {
-    cv::Mat mat = cv::imread();
-    MyMat myMat = MyMat();
-    myMat.flags = mat.flags;
-    myMat.rows = mat.rows;
-    myMat.cols = mat.cols;
-    myMat.data = mat.data;
-    return myMat;
+ATTRIBUTES Mat *opencv_decodeImage(
+        unsigned char *img,
+        int32_t *imgLengthBytes) {
+
+    Mat *src = new Mat();
+    std::vector<unsigned char> m;
+
+    __android_log_print(ANDROID_LOG_VERBOSE, "NATIVE",
+                        "opencv_decodeImage() ---  start imgLengthBytes:%d ",
+                        *imgLengthBytes);
+
+    for (int32_t a = *imgLengthBytes; a >= 0; a--) m.push_back(*(img++));
+
+    *src = imdecode(m, cv::IMREAD_COLOR);
+    if (src->data == nullptr)
+        return nullptr;
+
+    if (DEBUG_NATIVE)
+        __android_log_print(ANDROID_LOG_VERBOSE, "NATIVE",
+                            "opencv_decodeImage() ---  len before:%d  len after:%d  width:%d  height:%d",
+                            *imgLengthBytes, src->step[0] * src->rows,
+                            src->cols, src->rows);
+
+    *imgLengthBytes = src->step[0] * src->rows;
+    return src;
 }
+
+ATTRIBUTES
+unsigned char *opencv_blur(
+        uint8_t *imgMat,
+        int32_t *imgLengthBytes,
+        int32_t kernelSize) {
+
+    Mat *src = opencv_decodeImage(imgMat, imgLengthBytes);
+
+    if (src == nullptr || src->data == nullptr)
+        return nullptr;
+
+    if (DEBUG_NATIVE) {
+        __android_log_print(ANDROID_LOG_VERBOSE, "NATIVE",
+                            "opencv_blur() ---  width:%d   height:%d",
+                            src->cols, src->rows);
+
+        __android_log_print(ANDROID_LOG_VERBOSE, "NATIVE",
+                            "opencv_blur() ---  len:%d ",
+                            src->step[0] * src->rows);
+    }
+
+
+    Mat dst = Mat();
+    GaussianBlur(*src, dst, Size(kernelSize, kernelSize), 15, 0, 4);
+    std::vector<uchar> buf(1); // imencode() will resize it
+//    Encoding with b       mp : 20-40ms
+//    Encoding with jpg : 50-70 ms
+//    Encoding with png: 200-250ms
+    imencode(".png", dst, buf);
+    if (DEBUG_NATIVE) {
+        __android_log_print(ANDROID_LOG_VERBOSE, "NATIVE",
+                            "opencv_blur()  resulting image  length:%d   %d x %d", buf.size(),
+                            dst.cols, dst.rows);
+    }
+
+    *imgLengthBytes = buf.size();
+
+    // the return value may be freed by GC before dart receive it??
+    // Sometimes in Dart, ImgProc.computeSync() receives all zeros while here buf.data() is filled correctly
+    // Returning a new allocated memory.
+    // Note: remember to free() the Pointer<> in Dart!
+
+//    unsigned char *ret = (unsigned char *) malloc(buf.size());
+//    memcpy(ret, buf.data(), buf.size());
+    return buf.data();
+}
+
+
