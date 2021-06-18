@@ -15,13 +15,14 @@ class FfiPage extends StatefulWidget {
 }
 
 class _FfiPageState extends State<FfiPage> {
+  static const String imageUrl = 'assets/image_lonely.jpeg';
   Uint8List? uint8list;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      final bytes = await rootBundle.load('assets/kyc_document_new.png');
+      final bytes = await rootBundle.load(imageUrl);
       uint8list = bytes.buffer.asUint8List();
       setState(() {});
     });
@@ -34,21 +35,21 @@ class _FfiPageState extends State<FfiPage> {
       body: Column(
         children: [
           CupertinoButton(
-            child: Text('a+b'),
+            child: Text('hello world'),
             onPressed: () async {
-              final ret = OpencvPlugin.add(1, 1);
-              final bytes = await rootBundle.load('assets/kyc_document_new.png');
-              uint8list = bytes.buffer.asUint8List();
-              setState(() {});
-              print('object ${uint8list}');
-
+              OpencvPlugin.helloWorld();
+            },
+          ),
+          CupertinoButton(
+            child: Text('a*b'),
+            onPressed: () async {
+              final ret = OpencvPlugin.multiply(10, 100);
             },
           ),
           CupertinoButton(
             child: Text('高斯模糊'),
             onPressed: () {
               if (uint8list != null) {
-                print('高斯模糊 object ${uint8list}');
                 uint8list = OpencvPlugin.blur(uint8list!);
                 setState(() {});
               }

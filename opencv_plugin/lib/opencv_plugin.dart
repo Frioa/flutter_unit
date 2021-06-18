@@ -55,4 +55,30 @@ class OpencvPlugin {
 
     return _nativeAdd(a, b);
   }
+
+  static void helloWorld() {
+    final DynamicLibrary _opencvLib =
+        Platform.isAndroid ? DynamicLibrary.open("libnative-lib.so") : DynamicLibrary.process();
+
+    final void Function() hello =
+        _opencvLib.lookup<NativeFunction<Void Function()>>("hello").asFunction();
+
+    hello();
+  }
+
+  static int multiply(int a, int b) {
+    final DynamicLibrary _opencvLib =
+    Platform.isAndroid ? DynamicLibrary.open("libnative-lib.so") : DynamicLibrary.process();
+
+    final Pointer<Int32> Function(Pointer<Int32> a, int b) multiply =
+    _opencvLib.lookup<NativeFunction<Pointer<Int32> Function(Pointer<Int32> a, Int32 b)>>("multiply").asFunction();
+
+    Pointer<Int32> pa = malloc.allocate<Int32>(1);
+    pa.value = a;
+
+    final result = multiply(pa, b);
+    print('dart --> multiply() result: value=${result.value}');
+
+    return result.value;
+  }
 }

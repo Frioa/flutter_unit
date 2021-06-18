@@ -1,6 +1,5 @@
-#include <jni.h>
 #include <string>
-#include<opencv2/opencv.hpp>
+#include <opencv2/opencv.hpp>
 #include <android/log.h>
 
 #define ATTRIBUTES extern "C" __attribute__((visibility("default"))) __attribute__((used))
@@ -8,6 +7,25 @@
 #define DEBUG_NATIVE true
 
 using namespace cv;
+
+ATTRIBUTES
+void hello() {
+    __android_log_print(ANDROID_LOG_VERBOSE, "NATIVE",
+                        "hello world ");
+}
+
+ATTRIBUTES
+int32_t *multiply(int32_t *a, int32_t b)
+{
+    // Allocates native memory in C.
+    int *mult = (int *)malloc(sizeof(int));
+    *mult = *a * b;
+
+    __android_log_print(ANDROID_LOG_VERBOSE, "NATIVE",
+                        "multiply() ---mult:  mult:%d  *mult:%d   &mult:%d",
+                        mult, *mult, &mult);
+    return mult;
+}
 
 ATTRIBUTES
 int32_t native_add(int32_t x, int32_t y) {
@@ -63,17 +81,17 @@ unsigned char *opencv_blur(
     }
 
 
-    Mat dst = Mat();
-    GaussianBlur(*src, dst, Size(kernelSize, kernelSize), 15, 0, 4);
+    GaussianBlur(*src, *src, Size(kernelSize, kernelSize), 15, 0, 4);
     std::vector<uchar> buf(1); // imencode() will resize it
 //    Encoding with b       mp : 20-40ms
 //    Encoding with jpg : 50-70 ms
 //    Encoding with png: 200-250ms
-    imencode(".png", dst, buf);
+    imencode(".png", *src, buf);
+
     if (DEBUG_NATIVE) {
         __android_log_print(ANDROID_LOG_VERBOSE, "NATIVE",
                             "opencv_blur()  resulting image  length:%d   %d x %d", buf.size(),
-                            dst.cols, dst.rows);
+                            src->cols, src->rows);
     }
 
     *imgLengthBytes = buf.size();
