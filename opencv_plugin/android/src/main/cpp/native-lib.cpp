@@ -19,17 +19,15 @@ ATTRIBUTES Mat *opencv_decodeImage(
         int32_t *imgLengthBytes) {
 
     Mat *src = new Mat();
-    int32_t a = *imgLengthBytes;
     std::vector<unsigned char> m;
 
-    while (a >= 0) {
-        m.push_back(*(img++));
-        a--;
-    }
-
     __android_log_print(ANDROID_LOG_VERBOSE, "NATIVE",
-                        "opencv_decodeImage() imdecode()---------------------");
-    *src = cv::imdecode(m, cv::IMREAD_UNCHANGED);
+                        "opencv_decodeImage() ---  start imgLengthBytes:%d ",
+                        *imgLengthBytes);
+
+    for (int32_t a = *imgLengthBytes; a >= 0; a--) m.push_back(*(img++));
+
+    *src = imdecode(m, cv::IMREAD_COLOR);
     if (src->data == nullptr)
         return nullptr;
 
@@ -72,7 +70,7 @@ unsigned char *opencv_blur(
 //    Encoding with jpg : 50-70 ms
 //    Encoding with png: 200-250ms
     imencode(".png", dst, buf);
-    if (DEBUG_NATIVE){
+    if (DEBUG_NATIVE) {
         __android_log_print(ANDROID_LOG_VERBOSE, "NATIVE",
                             "opencv_blur()  resulting image  length:%d   %d x %d", buf.size(),
                             dst.cols, dst.rows);

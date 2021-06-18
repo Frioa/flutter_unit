@@ -35,17 +35,23 @@ class _FfiPageState extends State<FfiPage> {
         children: [
           CupertinoButton(
             child: Text('a+b'),
-            onPressed: () {
+            onPressed: () async {
               final ret = OpencvPlugin.add(1, 1);
+              final bytes = await rootBundle.load('assets/kyc_document_new.png');
+              uint8list = bytes.buffer.asUint8List();
+              setState(() {});
+              print('object ${uint8list}');
 
-              print('object $ret');
             },
           ),
           CupertinoButton(
-            child: Text('111'),
+            child: Text('高斯模糊'),
             onPressed: () {
-              uint8list = OpencvPlugin.blur(uint8list!);
-              setState(() {});
+              if (uint8list != null) {
+                print('高斯模糊 object ${uint8list}');
+                uint8list = OpencvPlugin.blur(uint8list!);
+                setState(() {});
+              }
             },
           ),
           if (uint8list != null) Image.memory(uint8list!),

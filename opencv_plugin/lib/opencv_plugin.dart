@@ -37,7 +37,10 @@ class OpencvPlugin {
             .asFunction();
 
     final newBytes = blur(bytes, imgLengthBytes, 15);
-    if (newBytes == nullptr) return null;
+    if (newBytes == nullptr) {
+      print('高斯模糊失败');
+      return null;
+    }
 
     var newList = newBytes.asTypedList(imgLengthBytes.value);
 
