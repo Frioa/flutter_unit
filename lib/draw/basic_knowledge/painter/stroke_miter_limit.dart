@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class StrokeMiterLimit extends CustomPainter {
   void drawStrokeMiterLimit(Canvas canvas) {
-    Paint paint =  Paint();
-    Path path =  Path();
+    final Paint paint =  Paint();
+    final Path path =  Path();
     paint
       ..style = PaintingStyle.stroke
       ..color = Colors.blue

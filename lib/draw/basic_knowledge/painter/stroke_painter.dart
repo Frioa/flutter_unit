@@ -28,8 +28,8 @@ class _StrokePainterWidgetState extends State<StrokePainterWidget> {
 class StrokePainter extends CustomPainter {
   /// TODO : 更好的方式实现 hitTest
   static const double r = 60.0;
-  final Offset center1 = Offset(r, r);
-  final Offset center2 = Offset(r + 120.0 + 10, r);
+  final Offset center1 = const Offset(r, r);
+  final Offset center2 = const Offset(r + 120.0 + 10, r);
 
   PaintingStyle style1 = PaintingStyle.stroke;
 
@@ -48,7 +48,7 @@ class StrokePainter extends CustomPainter {
   }
 
   void drawStyleStrokeWidth(Canvas canvas) {
-    Paint paint = Paint()..color = Colors.red;
+    final Paint paint = Paint()..color = Colors.red;
 
     canvas.drawCircle(
         center1,

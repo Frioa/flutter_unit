@@ -12,7 +12,7 @@ class _RadarChartPageState extends State<RadarChartPage> {
   late RadarChart student1;
   late RadarChart student2;
 
-  final unitRadar = RadarChart(values: [1, 1, 1]);
+  final unitRadar = const RadarChart(values: [1, 1, 1]);
 
   @override
   void initState() {
@@ -34,16 +34,16 @@ class _RadarChartPageState extends State<RadarChartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('雷达图')),
+      appBar: AppBar(title: const Text('雷达图')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             RadarChartWidget(
-              size: Size(300, 300),
+              size: const Size(300, 300),
               radarCharts: [student1, student2],
-              descList: ['语文', '数学', '数学', '英语','化学' ],
-              descStyle: TextStyle(fontSize: 16, color: Colors.blue),
+              descList: const ['语文', '数学', '数学', '英语', '化学'],
+              descStyle: const TextStyle(fontSize: 16, color: Colors.blue),
             ),
             Slider(
               min: 1,

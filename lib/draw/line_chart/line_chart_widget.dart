@@ -45,7 +45,6 @@ class _LineChartWidgetState extends State<LineChartWidget> {
           ),
           Slider(
             value: value,
-            min: .0,
             max: values.length.toDouble() - 1,
             divisions: values.length - 1,
             onChanged: (i) {
@@ -55,7 +54,7 @@ class _LineChartWidgetState extends State<LineChartWidget> {
             },
           ),
           CupertinoButton(
-            child: Text('初始化'),
+            child: const Text('初始化'),
             onPressed: () {
               if (x) {
                 values = [1.0, 2, 1, 3,1, 3, 6];

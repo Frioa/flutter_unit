@@ -12,9 +12,9 @@ class CircleLoadingWidget extends StatelessWidget {
     this.size = 100,
   }) : super(key: key);
 
-  static final _minSize = 48.0;
+  static const _minSize = 48.0;
 
-  static final _maxSize = 120.0;
+  static const _maxSize = 120.0;
 
   double get _size => size.clamp(_minSize, _maxSize);
 

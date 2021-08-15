@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class StrokeJoinPainter extends CustomPainter {
   void drawStrokeJoin(Canvas canvas) {
-    Paint paint = Paint();
-    Path path = Path();
+    final Paint paint = Paint();
+    final Path path = Path();
     paint
       ..style = PaintingStyle.stroke
       ..color = Colors.blue

@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 
 class AntiAliasPainter extends CustomPainter {
   void drawIsAntiAliasColor(Canvas canvas) {
-    Paint paint = Paint();
-    final r = 60.0;
+    final Paint paint = Paint();
+    const r = 60.0;
 
     canvas.drawCircle(
-      Offset(r, r),
+      const Offset(r, r),
       r,
       paint
         ..color = Colors.blue
         ..strokeWidth = 5,
     );
     canvas.drawCircle(
-      Offset(r + 120.0 + 10, r),
+      const Offset(r + 120.0 + 10, r),
       r,
       paint
         ..isAntiAlias = false

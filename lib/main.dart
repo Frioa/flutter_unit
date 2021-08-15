@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       builder: () {
-        return MaterialApp(home: MyHomePage(title: 'Flutter Demo Home Page'));
+        return const MaterialApp(home: MyHomePage(title: 'Flutter Demo Home Page'));
       },
     );
   }

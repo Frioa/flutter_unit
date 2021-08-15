@@ -31,23 +31,23 @@ class _FfiPageState extends State<FfiPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(('ffi'))),
+      appBar: AppBar(title: const Text('ffi')),
       body: Column(
         children: [
           CupertinoButton(
-            child: Text('hello world'),
+            child: const Text('hello world'),
             onPressed: () async {
               OpencvPlugin.helloWorld();
             },
           ),
           CupertinoButton(
-            child: Text('a*b'),
+            child: const Text('a*b'),
             onPressed: () async {
-              final ret = OpencvPlugin.multiply(10, 100);
+              OpencvPlugin.multiply(10, 100);
             },
           ),
           CupertinoButton(
-            child: Text('高斯模糊'),
+            child: const Text('高斯模糊'),
             onPressed: () {
               if (uint8list != null) {
                 uint8list = OpencvPlugin.blur(uint8list!);

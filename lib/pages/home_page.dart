@@ -4,7 +4,7 @@ import 'package:flutter_unit/pages/draw/loading_page.dart';
 import 'package:flutter_unit/pages/pages.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -23,20 +23,20 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             CupertinoButton(
-              child: Text('雷达图示例'),
+              child: const Text('雷达图示例'),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => RadarChartPage()));
               },
             ),
             CupertinoButton(
-              child: Text('Flutter 绘制指南'),
+              child: const Text('Flutter 绘制指南'),
               onPressed: () {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => DrawBaseKnowledgePage()));
               },
             ),
             CupertinoButton(
-              child: Text('Loading'),
+              child: const Text('Loading'),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             CupertinoButton(
-              child: Text('Line Chart'),
+              child: const Text('Line Chart'),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -54,11 +54,11 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             CupertinoButton(
-              child: Text('ffi'),
+              child: const Text('ffi'),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FfiPage()),
+                  MaterialPageRoute(builder: (context) => const FfiPage()),
                 );
               },
             ),

@@ -30,28 +30,28 @@ class RadarChart extends Equatable {
   RadarChart operator +(RadarChart other) {
     return RadarChart(
       values: values.compute(other.values, (v1, v2) => v1 + v2),
-      background: this.background,
+      background: background,
     );
   }
 
   RadarChart operator -(RadarChart other) {
     return RadarChart(
       values: values.compute(other.values, (v1, v2) => v1 - v2),
-      background: this.background,
+      background: background,
     );
   }
 
   RadarChart operator *(double t) {
     return RadarChart(
       values: values.compute(null, (v1, v2) => v1 * t),
-      background: this.background,
+      background: background,
     );
   }
 
   RadarChart operator /(RadarChart other) {
     return RadarChart(
       values: values.compute(other.values, (v1, v2) => v1 / v2),
-      background: this.background,
+      background: background,
     );
   }
 

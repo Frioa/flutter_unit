@@ -38,12 +38,13 @@ class RadarChartWidget extends StatefulWidget {
     this.padding = const EdgeInsets.symmetric(vertical: 24),
     this.controller,
   }) : super(key: key) {
+    if (radarCharts.isEmpty) throw 'radarCharts is isEmpty';
     assert(() {
-      if (radarCharts.isEmpty) throw 'radarCharts is isEmpty';
-      for (int i = 1; i < radarCharts.length; i++)
+      for (int i = 1; i < radarCharts.length; i++) {
         if (radarCharts[i - 1].values.length != radarCharts[i].values.length) {
           throw 'The length of each RadarChart.values must be equal';
         }
+      }
       return true;
     }());
   }
@@ -94,8 +95,9 @@ class _RadarChartWidgetState extends State<RadarChartWidget> with SingleTickerPr
       animations.clear();
       baseCoordinate.clear();
       updateData(widget);
-    } else
+    } else {
       updateData(oldWidget);
+    }
     controller.reset();
     controller.forward();
   }
@@ -224,10 +226,10 @@ class _RadarChartPainter extends CustomPainter {
 
   // 绘制虚线从 x -> y
   void _drawDashLine(Canvas canvas, Offset x, Offset y) {
-    double distance = (x - y).distance;
-    int dashedNum = distance ~/ (dashedSpace + dashedSize.width);
-    double k = (y.dy - x.dy) / (y.dx - x.dx);
-    double b = x.dy - x.dx * k;
+    final double distance = (x - y).distance;
+    final int dashedNum = distance ~/ (dashedSpace + dashedSize.width);
+    final double k = (y.dy - x.dy) / (y.dx - x.dx);
+    final double b = x.dy - x.dx * k;
 
     /// 利用直线方程画虚线
     for (int i = 0; i <= dashedNum; i++) {

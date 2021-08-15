@@ -19,9 +19,8 @@ class _CanvasWidgetState extends State<CanvasWidget> {
         padding: EdgeInsets.only(top: 48.sp, left: 16.sp, right: 16.sp),
         alignment: Alignment.topLeft,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: const [
             MarkDownBodyWidget('### 【Canvas 篇】画布 \n'
                 '**一、画布变换和状态**<br>'
                 '画布变换主要通过一个 `4*4` 的变换矩阵。 其中 `transform` 方法是最核心的，也是最难用的。'

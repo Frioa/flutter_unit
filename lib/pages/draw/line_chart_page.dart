@@ -10,8 +10,8 @@ class _LineChartPageState extends State<LineChartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('折线图')),
-      body: LineChartWidget(),
+      appBar: AppBar(title: const Text('折线图')),
+      body: const LineChartWidget(),
     );
   }
 }

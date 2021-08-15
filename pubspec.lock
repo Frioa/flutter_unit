@@ -169,6 +169,20 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.1"
+  copy_with_extension:
+    dependency: "direct main"
+    description:
+      name: copy_with_extension
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.2"
+  copy_with_extension_gen:
+    dependency: "direct dev"
+    description:
+      name: copy_with_extension_gen
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.0"
   crypto:
     dependency: transitive
     description:
@@ -182,7 +196,7 @@ packages:
       name: cupertino_icons
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   dart_style:
     dependency: transitive
     description:

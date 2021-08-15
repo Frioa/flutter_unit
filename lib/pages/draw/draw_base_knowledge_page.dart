@@ -12,20 +12,20 @@ class _DrawBaseKnowledgePageState extends State<DrawBaseKnowledgePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Flutter 绘制指南')),
+      appBar: AppBar(title: const Text('Flutter 绘制指南')),
       body: SingleChildScrollView(
         child: Column(
           children: [
             CupertinoButton(
-              child: Text('Paint 篇'),
+              child: const Text('Paint 篇'),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => PaintWidget()));
               },
             ),
             CupertinoButton(
-              child: Text('Canvas 篇'),
+              child: const Text('Canvas 篇'),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CanvasWidget()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const CanvasWidget()));
               },
             ),
           ],

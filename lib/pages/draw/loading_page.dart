@@ -10,8 +10,8 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Loading')),
-      body: CircleLoadingWidget(),
+      appBar: AppBar(title: const Text('Loading')),
+      body: const CircleLoadingWidget(),
     );
   }
 }

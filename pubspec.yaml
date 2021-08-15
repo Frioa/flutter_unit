@@ -1,5 +1,6 @@
 name: flutter_unit
 description: A new Flutter application.
+publish_to: none
 
 version: 1.0.0+1
 
@@ -7,13 +8,15 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 parameters:
-  private_pub_server: &private_pub_server "http://pubserver:7878"
+# private_pub_server: &private_pub_server "http://pubserver:7878"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.3
+
+  copy_with_extension: ^2.0.0
 
   equatable: ^2.0.0
 
@@ -35,15 +38,17 @@ dependencies:
   native_add:
     path: native_add
 
+
   opencv_plugin:
-    path: opencv_plugin
+     path: opencv_plugin
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  build_runner: ^1.11.5
   autoequal_gen: ^0.2.0
+  build_runner: ^1.11.5
+  copy_with_extension_gen: ^2.0.0
 flutter:
 
   uses-material-design: true

@@ -31,7 +31,7 @@ class MarkDownBodyWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: mainAxisAlignment,
       crossAxisAlignment: crossAxisAlignment,
-      children: strList.map((e) => _buildMarkDown(e)).toList(),
+      children: strList.map(_buildMarkDown).toList(),
     );
   }
 }
