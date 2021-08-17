@@ -7,5 +7,5 @@ part of 'radar_char.dart';
 // **************************************************************************
 
 extension _$RadarChartAutoequal on RadarChart {
-  List<Object?> get _autoequalProps => [values, background, stringify];
+  List<Object?> get _autoequalProps => [values, background];
 }

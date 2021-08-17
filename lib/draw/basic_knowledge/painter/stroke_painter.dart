@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_unit/provider/provider.dart';
+import 'package:flutter_unit/views/views.dart';
 
 class StrokePainterWidget extends StatefulWidget {
   final Size size;

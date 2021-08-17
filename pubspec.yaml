@@ -22,7 +22,7 @@ dependencies:
 
   autoequal: ^0.2.0
 
-  flutter_bloc: ^7.0.0
+  flutter_bloc: ^7.1.0
 
   flutter_markdown: ^0.6.2
 
@@ -39,7 +39,7 @@ dependencies:
     path: native_add
 
   opencv_plugin:
-     path: opencv_plugin
+    path: opencv_plugin
 #  TODO : aspectd 未迁移到 null 安全
 #  aspectd_impl:
 #    path: aspectd_impl

@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_unit/pages/draw/loading_page.dart';
-import 'package:flutter_unit/pages/pages.dart';
+import 'package:flutter_unit/blocs/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_unit/views/views.dart';
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -64,6 +66,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.brightness_6),
+        onPressed: () {
+          context.read<AppBloc>().add(AppEvent.autoTheme);
+        },
       ),
     );
   }

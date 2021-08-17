@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_unit/draw/basic_knowledge/painter/painter.dart';
-import 'package:flutter_unit/provider/provider.dart';
+import 'package:flutter_unit/views/views.dart';
 
 class PaintWidget extends StatefulWidget {
   @override
