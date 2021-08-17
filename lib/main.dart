@@ -8,6 +8,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return ScreenUtilInit(
       builder: () {
         return const MaterialApp(home: MyHomePage(title: 'Flutter Demo Home Page'));

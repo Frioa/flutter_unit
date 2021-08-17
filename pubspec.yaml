@@ -38,9 +38,11 @@ dependencies:
   native_add:
     path: native_add
 
-
   opencv_plugin:
      path: opencv_plugin
+#  TODO : aspectd 未迁移到 null 安全
+#  aspectd_impl:
+#    path: aspectd_impl
 
 dev_dependencies:
   flutter_test:
