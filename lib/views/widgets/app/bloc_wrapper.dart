@@ -24,7 +24,7 @@ class _BlocWrapperState extends State<BlocWrapper> {
       //使用MultiBlocProvider包裹
       providers: [
         //Bloc提供器
-        BlocProvider<AppBloc>(create: (_) => AppBloc()..add(AppEvent.darkTheme)),
+        BlocProvider<AppBloc>(create: (_) => AppBloc()..add(AppEvent.lightTheme)),
       ],
       child: widget.child,
     );

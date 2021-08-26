@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_unit/blocs/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_unit/views/pages/design/design_page.dart';
 import 'package:flutter_unit/views/views.dart';
 
 
@@ -61,6 +62,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const FfiPage()),
+                );
+              },
+            ),
+            CupertinoButton(
+              child: const Text('Design patten'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DesignPage()),
                 );
               },
             ),

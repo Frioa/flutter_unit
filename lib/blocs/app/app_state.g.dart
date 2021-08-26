@@ -7,7 +7,7 @@ part of 'app_state.dart';
 // **************************************************************************
 
 extension _$AppStateAutoequal on AppState {
-  List<Object?> get _autoequalProps => [theme];
+  List<Object?> get _autoequalProps => [theme, markdownTheme];
 }
 
 // **************************************************************************
@@ -16,9 +16,11 @@ extension _$AppStateAutoequal on AppState {
 
 extension AppStateCopyWith on AppState {
   AppState copyWith({
+    MarkdownStyleSheetBaseTheme? markdownTheme,
     ThemeData? theme,
   }) {
     return AppState(
+      markdownTheme: markdownTheme ?? this.markdownTheme,
       theme: theme ?? this.theme,
     );
   }

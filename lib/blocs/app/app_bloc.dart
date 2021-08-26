@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_unit/blocs/bloc.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
@@ -19,6 +20,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             ? ThemeCubit.lightTheme
             : ThemeCubit.darkTheme;
         yield state.copyWith(theme: theme);
+        break;
+
+      case AppEvent.markdownCupertino:
+        yield state.copyWith(markdownTheme: MarkdownStyleSheetBaseTheme.cupertino);
+        break;
+      case AppEvent.markdownMaterial:
+        yield state.copyWith(markdownTheme: MarkdownStyleSheetBaseTheme.material);
         break;
     }
   }
