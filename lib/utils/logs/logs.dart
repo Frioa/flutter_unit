@@ -8,7 +8,7 @@ class Logger {
       '${CustomFormatTree.timeStampToken}\t'
       '${CustomFormatTree.messageToken}';
 
-  static String get _methodName => LogTree.getTag(stackIndex: 3);
+  static String get _methodName =>'${LogTree.getTag(stackIndex: 3)}()';
 
   Logger._() {
     Fimber.plantTree(CustomFormatTree(useColors: true, logFormat: _defaultFormat));

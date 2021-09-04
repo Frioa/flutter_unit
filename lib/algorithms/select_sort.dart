@@ -1,14 +1,18 @@
+import 'package:flutter_unit/algorithms/algorithms.dart';
 import 'package:flutter_unit/utils/utils.dart';
 import 'package:collection/collection.dart';
 
-class SelectSort {
-  static void sort<T>(List<T> list, [int Function(T, T)? compare]) {
-    final _compare = compare ?? defaultCompare;
+class SelectSort<T> extends Sort<T> {
+  SelectSort({
+    int Function(T, T) compare = defaultCompare,
+  }) : super(compare);
 
+  @override
+  void sort(List<T> list) {
     for (int i = 0; i < list.length; i++) {
       var minIndex = i;
       for (int j = i; j < list.length; j++) {
-        if (_compare(list[j], list[minIndex]) < 0) {
+        if (compare(list[j], list[minIndex]) < 0) {
           minIndex = j;
         }
       }
@@ -34,4 +38,7 @@ class SelectSort {
 
     return newList;
   }
+
+  @override
+  String get sortName => 'Select Sort';
 }
