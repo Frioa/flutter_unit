@@ -9,12 +9,3 @@ class LinearSearch {
     return -1;
   }
 }
-
-class Student extends Equatable {
-  final String name;
-
-  const Student(this.name);
-
-  @override
-  List<Object?> get props => [name];
-}

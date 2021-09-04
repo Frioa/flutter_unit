@@ -10,6 +10,8 @@ import 'package:flutter_unit/utils/utils.dart';
 /// 3. main n = 100000000, 100 runs: Spend time 7.154954s
 ///
 void main() {
+  int a = 9223372036854775807;
+  print('object ${a}');
   final dataSize = [1000000, 10000000, 100000000];
 
   for (final n in dataSize) {
