@@ -5,7 +5,7 @@ abstract class Sort<T> {
 
   Sort([this.compare = defaultCompare]);
 
-  String get sortName;
+  String get name;
 
   void sort(List<T> list);
 
@@ -17,9 +17,9 @@ abstract class Sort<T> {
     );
 
     if (!isSorted(list)) {
-      throw Exception('$sortName sort failed');
+      throw Exception('$name sort failed');
     } else {
-      log.d('$sortName: n=${list.length}, time=${diff.toSpendTimeInSec()}');
+      log.d('$name: n=${list.length}, time=${diff.toSpendTimeInSec()}');
     }
   }
 

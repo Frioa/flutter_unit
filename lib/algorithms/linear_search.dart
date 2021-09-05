@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 
 class LinearSearch {
   static int search<T>(List<T> data, T target) {

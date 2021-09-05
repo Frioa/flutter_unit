@@ -173,7 +173,7 @@ class NTapGestureRecognizer extends GestureRecognizer {
         tracker!.entry.resolve(GestureDisposition.accepted);
       }
       _freezeTracker(tracker);
-      GestureBinding.instance!.gestureArena.release(tracker!.pointer);
+      GestureBinding.instance!.gestureArena.release(tracker.pointer);
     }
     _clearTrackers();
     tapCount = 0;

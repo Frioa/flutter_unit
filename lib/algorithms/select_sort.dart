@@ -69,5 +69,5 @@ class SelectSort<T> extends Sort<T> {
   }
 
   @override
-  String get sortName => 'Select Sort';
+  String get name => 'Select Sort .type=${type.toString()}';
 }

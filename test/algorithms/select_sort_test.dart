@@ -8,7 +8,7 @@ import 'package:flutter_unit/utils/utils.dart';
 /// Select Sort: n=100000, time=60.237689s
 ///
 void main() {
-  final dataSize = [10000];
+  final dataSize = [10000, 20000];
   // final selectSort = SelectSort(type: SelectSortType.normal);
   final selectSort = SelectSort(type: SelectSortType.normalReverse);
 
