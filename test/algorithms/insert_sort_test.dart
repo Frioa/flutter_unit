@@ -18,13 +18,16 @@ void main() {
   // final dataSize = [10000, 30000 ];
   final sort1 = InsetSort();
   final sort2 = InsetSort(type: InsetSortType.swap);
+  final sort3 = InsetSort(type: InsetSortType.normalReverse);
 
   for (final n in dataSize) {
     final List<int> list1 = ArrayGenerator.generateRandomArray(n, 2 * n);
     final list2 = List.from(list1);
     final orderList = ArrayGenerator.generateOrderedArray(n);
-    sort1.test(list1);
-    sort2.test(list2);
-    sort1.test(orderList);
+
+    // sort1.test(list1);
+    // sort2.test(list2);
+    sort3.test(list1);
+    // sort1.test(orderList);
   }
 }

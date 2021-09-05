@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 enum InsetSortType {
   swap,
   normal,
+  normalReverse,
 }
 
 ///
@@ -27,6 +28,7 @@ class InsetSort<T> extends Sort<T> {
   @override
   void sort(List<T> list) {
     if (type == InsetSortType.normal) return _normal(list);
+    if (type == InsetSortType.normalReverse) return _normalReverse(list);
     if (type == InsetSortType.swap) return _swap(list);
   }
 
@@ -41,6 +43,18 @@ class InsetSort<T> extends Sort<T> {
       final t = list[i];
       for (; j > 0 && compare(t, list[j - 1]) < 0; j--) {
         list[j] = list[j - 1];
+      }
+      list[j] = t;
+    }
+  }
+
+  void _normalReverse(List<T> list) {
+    for (int i = list.length - 1; i >= 0; i--) {
+      int j = i;
+      final t = list[i];
+
+      for (; j + 1 < list.length && compare(t, list[j + 1]) > 0; j++) {
+        list[j] = list[j + 1];
       }
       list[j] = t;
     }
