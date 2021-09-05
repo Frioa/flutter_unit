@@ -22,7 +22,8 @@ class MergeSort<T> extends Sort<T> {
   void _mergeSort(List<T> list, int left, int right) {
     if (left >= right) return;
 
-    final int mid = (left + right) >> 1;
+    // final int mid = (left + right) >> 1;
+    final int mid = (left + (right - left) / 2).toInt();
 
     /// 对 [left, mid] 进行排序
     _mergeSort(list, left, mid);
