@@ -7,6 +7,7 @@ enum MergeSortType {
 
 class MergeSort<T> extends Sort<T> {
   final MergeSortType type;
+  late List<T> temp;
 
   MergeSort({
     this.type = MergeSortType.normal,
@@ -18,6 +19,7 @@ class MergeSort<T> extends Sort<T> {
 
   @override
   void sort(List<T> list) {
+    temp = List.from(list);
     if (type == MergeSortType.normal) _mergeSort(list, 0, list.length - 1);
   }
 
@@ -41,22 +43,20 @@ class MergeSort<T> extends Sort<T> {
   }
 
   void mergeList(List<T> list, int left, int mid, int right) {
-    final List copyList = List.filled(right - left + 1, 0);
-    List.copyRange(list, left, copyList);
-
+    List.copyRange(temp, left, list, left, right + 1);
     int i = left;
     int j = mid + 1;
 
     for (int index = left; index <= right; index++) {
       late T curValue;
       if (i > mid) {
-        curValue = copyList[j++ - left];
+        curValue = temp[j++];
       } else if (j > right) {
-        curValue = copyList[i++ - left];
-      } else if (compare(copyList[i - left], copyList[j - left]) < 0) {
-        curValue = copyList[i++ - left];
+        curValue = temp[i++];
+      } else if (compare(temp[i], temp[j]) < 0) {
+        curValue = temp[i++];
       } else {
-        curValue = copyList[j++ - left];
+        curValue = temp[j++];
       }
       list[index] = curValue;
     }
