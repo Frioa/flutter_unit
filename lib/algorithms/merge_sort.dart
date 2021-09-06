@@ -1,7 +1,9 @@
 import 'package:flutter_unit/algorithms/algorithms.dart';
 import 'package:flutter_unit/utils/algorithms_utils.dart';
 
-enum MergeSortType { normal }
+enum MergeSortType {
+  normal,
+}
 
 class MergeSort<T> extends Sort<T> {
   final MergeSortType type;
@@ -30,6 +32,9 @@ class MergeSort<T> extends Sort<T> {
 
     /// 对 [mid + 1, right] 进行排序
     _mergeSort(list, mid + 1, right);
+
+    /// [NOTE]: 优化对于两个顺序的数组
+    if (compare(list[mid], list[mid + 1]) < 0) return;
 
     /// 对两个有序的数组进行排序
     mergeList(list, left, mid, right);
