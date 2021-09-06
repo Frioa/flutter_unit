@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter_unit/algorithms/algorithms.dart';
 import 'package:flutter_unit/utils/algorithms_utils.dart';
 
 enum MergeSortType {
   normal,
+  bottomUp,
 }
 
 class MergeSort<T> extends Sort<T> {
@@ -21,6 +24,7 @@ class MergeSort<T> extends Sort<T> {
   void sort(List<T> list) {
     temp = List.from(list);
     if (type == MergeSortType.normal) _mergeSort(list, 0, list.length - 1);
+    if (type == MergeSortType.bottomUp) _bottomUp(list);
   }
 
   void _mergeSort(List<T> list, int left, int right) {
@@ -39,10 +43,25 @@ class MergeSort<T> extends Sort<T> {
     if (compare(list[mid], list[mid + 1]) < 0) return;
 
     /// 对两个有序的数组进行排序
-    mergeList(list, left, mid, right);
+    _mergeList(list, left, mid, right);
   }
 
-  void mergeList(List<T> list, int left, int mid, int right) {
+  void _bottomUp(List<T> list) {
+    // 遍历合并的区间长度
+    for (int sz = 1; sz < list.length; sz = sz << 1) {
+      // 合并[i, i + sz -1] 和 [i  + sz, i + sz + sz -1]
+      for (int left = 0; left < list.length; left += sz << 1) {
+        final int right = min(left + sz + sz - 1, list.length - 1);
+        final int mid = left + sz - 1;
+
+        if (mid + 1 < t.length && compare(list[mid], list[mid + 1]) < 0) continue;
+
+        _mergeList(list, left, mid, right);
+      }
+    }
+  }
+
+  void _mergeList(List<T> list, int left, int mid, int right) {
     List.copyRange(temp, left, list, left, right + 1);
     int i = left;
     int j = mid + 1;

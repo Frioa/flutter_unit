@@ -12,13 +12,19 @@ import 'package:flutter_unit/utils/utils.dart';
 void main() {
   final dataSize = [5000000];
   final sort = MergeSort();
+  final bottomUp = MergeSort(type: MergeSortType.bottomUp);
 
   for (final n in dataSize) {
     final List<int> list1 = ArrayGenerator.generateRandomArray(n, 2 * n);
+    final List<int> copyList = List.from(list1);
     final List<int> orderList = ArrayGenerator.generateOrderedArray(n);
 
-
+    // print('object $list1');
     sort.test(list1);
-    sort.test(orderList);
+    bottomUp.test(copyList);
+    // print('object $list1');
+
+    // sort.test(list1);
+    // sort.test(orderList);
   }
 }
