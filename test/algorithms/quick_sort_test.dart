@@ -10,11 +10,12 @@ import 'package:flutter_unit/utils/utils.dart';
 ///
 
 void main() {
-  final dataSize = [1000000];
+  final dataSize = [100000];
   final sort = QuickSort();
 
   for (final n in dataSize) {
-    final List<int> list1 = ArrayGenerator.generateRandomArray(n, 2 * n);
+    // final List<int> list1 = ArrayGenerator.generateRandomArray(n, 2 * n);
+    final List<int> list1 = ArrayGenerator.generateOrderedArray(n );
 
     sort.test(list1);
   }
