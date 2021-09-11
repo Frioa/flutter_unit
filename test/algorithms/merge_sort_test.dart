@@ -2,7 +2,7 @@ import 'package:flutter_unit/algorithms/algorithms.dart';
 import 'package:flutter_unit/utils/utils.dart';
 
 ///
-/// 时间复杂度 o(NlogN)
+/// 时间复杂度 O(NlogN)
 ///
 /// Merge Sort: n=100000, time=0.045847s
 /// Merge Sort（优化有序数组）: n=100000, time=0.003985s
