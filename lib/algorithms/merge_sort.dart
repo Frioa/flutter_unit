@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter_unit/algorithms/algorithms.dart';
+import 'package:flutter_unit/algorithms/insert_sort.dart';
 import 'package:flutter_unit/utils/algorithms_utils.dart';
 
 enum MergeSortType {
@@ -11,6 +12,7 @@ enum MergeSortType {
 class MergeSort<T> extends Sort<T> {
   final MergeSortType type;
   late List<T> temp;
+  final InsetSort insetSort = InsetSort();
 
   MergeSort({
     this.type = MergeSortType.normal,
@@ -29,6 +31,11 @@ class MergeSort<T> extends Sort<T> {
 
   void _mergeSort(List<T> list, int left, int right) {
     if (left >= right) return;
+    // [NOTE] 使用插入排序优化
+    // if (right - left <= 15) {
+    //   insetSort.sort(list, left, right);
+    //   return;
+    // }
 
     // final int mid = (left + right) >> 1;
     final int mid = (left + (right - left) / 2).toInt();
@@ -54,8 +61,13 @@ class MergeSort<T> extends Sort<T> {
         final int right = min(left + sz + sz - 1, list.length - 1);
         final int mid = left + sz - 1;
 
-        if (mid + 1 < t.length && compare(list[mid], list[mid + 1]) < 0) continue;
+        /// [NOTE]: 优化对于两个顺序的数组
+        if (mid + 1 < list.length && compare(list[mid], list[mid + 1]) < 0) continue;
 
+        // if (right - left <= 15) {
+        //   insetSort.sort(list, left, right);
+        //   continue;
+        // }
         _mergeList(list, left, mid, right);
       }
     }
@@ -81,6 +93,3 @@ class MergeSort<T> extends Sort<T> {
     }
   }
 }
-
-// 1 2
-// 0 0 1

@@ -10,7 +10,7 @@ import 'package:flutter_unit/utils/utils.dart';
 ///
 
 void main() {
-  final dataSize = [5000000];
+  final dataSize = [1000000];
   final sort = MergeSort();
   final bottomUp = MergeSort(type: MergeSortType.bottomUp);
 
