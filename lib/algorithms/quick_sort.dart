@@ -40,17 +40,18 @@ class QuickSort<T> extends Sort<T> {
     int j = right;
 
     while (true) {
-      while (i <= right && compare(list[i], list[kIndex]) < 0) {
+      while (i <= j && compare(list[i], list[kIndex]) < 0) {
         i++;
       }
 
-      while (j >= left && compare(list[j], list[kIndex]) > 0) {
+      while (j >= i && compare(list[j], list[kIndex]) > 0) {
         j--;
       }
 
-      if (i > j) break;
-
-      list.swap(i++, j--);
+      if (i >= j) break;
+      list.swap(i, j);
+      i++;
+      j--;
     }
     list.swap(kIndex, j);
 

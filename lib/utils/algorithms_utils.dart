@@ -50,6 +50,28 @@ class ArrayGenerator {
 
     return list;
   }
+
+  /// 针对快速排序中 partition 中 k 取值位 (l + r) / 2 的特殊情况的“有序数组”
+  /// n = 10. [2, 1, 3, 4, 0, 6, 7, 5, 8, 9]
+  static List<int> generateSpecialArray(int n) {
+    final list = List.filled(n, 0, growable: true);
+
+    _generateSpecialArray(list, 0, n - 1, 0);
+
+    return list;
+  }
+
+
+  static int _generateSpecialArray(List<int> list, int left, int right, int value) {
+    if (left > right) return value;
+
+    final mid = (left + right) >> 1;
+    list[mid] = value;
+    value++;
+    final lValue =  _generateSpecialArray(list, left, mid - 1, value);
+
+    return _generateSpecialArray(list, mid + 1, right,  lValue);
+  }
 }
 
 class AlgorithmsUtils {
@@ -65,7 +87,5 @@ class AlgorithmsUtils {
     return true;
   }
 
-  static void sortTest<E>(String sortName, List<E> list) {
-
-  }
+  static void sortTest<E>(String sortName, List<E> list) {}
 }
