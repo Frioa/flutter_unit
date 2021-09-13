@@ -15,11 +15,11 @@ dependencies:
 
   cupertino_icons: ^1.0.3
 
-  copy_with_extension: ^2.0.0
+  copy_with_extension: ^2.0.2
 
-  equatable: ^2.0.0
+  equatable: ^2.0.3
 
-  autoequal: ^0.2.0
+#  autoequal: ^0.2.0
 
   flutter_bloc: ^7.1.0
 
@@ -42,13 +42,14 @@ dependencies:
 #  aspectd_impl:
 #    path: aspectd_impl
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  autoequal_gen: ^0.2.0
-  build_runner: ^1.11.5
-  copy_with_extension_gen: ^2.0.0
+#  autoequal_gen: ^0.2.0
+  build_runner: ^2.1.2
+  copy_with_extension_gen: ^2.0.2
 flutter:
 
   uses-material-design: true

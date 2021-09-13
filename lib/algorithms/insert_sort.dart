@@ -1,6 +1,6 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_unit/algorithms/sort.dart';
 import 'package:flutter_unit/utils/utils.dart';
-import 'package:collection/collection.dart';
 
 enum InsetSortType {
   swap,

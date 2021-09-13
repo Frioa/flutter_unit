@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:flutter_unit/utils/utils.dart';
 import 'package:flutter_unit/extension/extensions.dart';
+import 'package:flutter_unit/utils/utils.dart';
 
 int defaultCompare(Object? value1, Object? value2) =>
     (value1 as Comparable<Object?>).compareTo(value2);

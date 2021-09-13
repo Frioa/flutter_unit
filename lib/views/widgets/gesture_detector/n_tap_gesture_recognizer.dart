@@ -15,9 +15,8 @@ typedef GestureNTapCancelCallback = void Function(int n);
 class NTapGestureRecognizer extends GestureRecognizer {
   NTapGestureRecognizer({
     Object? debugOwner,
-    PointerDeviceKind? kind,
     this.maxN = 3,
-  }) : super(debugOwner: debugOwner, kind: kind);
+  }) : super(debugOwner: debugOwner);
 
   GestureNTapCallback? onNTap;
   GestureNTapCancelCallback? onNTapCancel;

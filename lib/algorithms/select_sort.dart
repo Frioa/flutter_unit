@@ -1,6 +1,7 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_unit/algorithms/algorithms.dart';
 import 'package:flutter_unit/utils/utils.dart';
-import 'package:collection/collection.dart';
+
 
 enum SelectSortType {
   normal,

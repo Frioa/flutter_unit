@@ -17,7 +17,6 @@ void main() {
   for (final n in dataSize) {
     final List<int> list1 = ArrayGenerator.generateRandomArray(n, 2 * n);
     final List<int> copyList = List.from(list1);
-    final List<int> orderList = ArrayGenerator.generateOrderedArray(n);
 
     // print('object $list1');
     sort.test(list1);

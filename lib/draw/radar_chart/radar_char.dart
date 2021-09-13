@@ -1,11 +1,9 @@
-import 'package:autoequal/autoequal.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_unit/draw/draws.dart';
 
 part 'radar_char.g.dart';
 
-@autoequal
 class RadarChart extends Equatable {
   final List<double> values;
   final Color background;
@@ -16,7 +14,10 @@ class RadarChart extends Equatable {
   });
 
   @override
-  List<Object?> get props => _autoequalProps;
+  List<Object?> get props => [
+    values,
+    background,
+  ];
 
   List<Offset> toOffsets(List<Offset> coordinate) {
     final list = <Offset>[];
