@@ -109,7 +109,9 @@ class BinarySearch<E> extends Search<E> {
     int right = data.length - 1;
 
     while (left < right) {
-      final mid = (left + right) >> 1;
+      /// 上取整，防止死循环。
+      /// 当 left 与 right 相邻并且 data[mid]<target ,left right 范围不会变化，进入死循环。
+      final mid = (left + right + 1) >> 1;
       if (compare(data[mid], target) < 0) {
         left = mid;
       } else {
