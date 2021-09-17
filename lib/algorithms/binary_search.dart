@@ -4,6 +4,11 @@ import 'package:flutter_unit/utils/algorithms_utils.dart';
 enum BinarySearchType {
   searchR,
   normal,
+  //
+  upper, // (upperCeil) 查找 大于 target 的最小值
+  lowerCeil, // 返回 >= target 的最小索引
+  //
+  lower, // 查找小于 target 的最大值
 }
 
 class BinarySearch<E> extends Search<E> {
@@ -21,6 +26,15 @@ class BinarySearch<E> extends Search<E> {
     }
     if (type == BinarySearchType.searchR) {
       return _searchR(data, target);
+    }
+    if (type == BinarySearchType.upper) {
+      return _upper(data, target);
+    }
+    if (type == BinarySearchType.lowerCeil) {
+      return _lowerCeil(data, target);
+    }
+    if (type == BinarySearchType.lower) {
+      return _lower(data, target);
     }
 
     return -1;
@@ -56,5 +70,53 @@ class BinarySearch<E> extends Search<E> {
     }
 
     return -1;
+  }
+
+  int _upper(List<E> data, E target) {
+    int left = 0;
+    int right = data.length;
+
+    while (left < right) {
+      final int mid = (left + right) >> 1;
+      if (compare(data[mid], target) <= 0) {
+        left = mid + 1;
+      } else {
+        right = mid;
+      }
+    }
+
+    return left;
+  }
+
+  int _lowerCeil(List<E> data, E target) {
+    int left = 0;
+    int right = data.length;
+
+    while (left < right) {
+      final int mid = (left + right) >> 1;
+      if (compare(data[mid], target) < 0) {
+        left = mid + 1;
+      } else {
+        right = mid;
+      }
+    }
+
+    return left;
+  }
+
+  int _lower(List<E> data, E target) {
+    int left = -1;
+    int right = data.length - 1;
+
+    while (left < right) {
+      final mid = (left + right) >> 1;
+      if (compare(data[mid], target) < 0) {
+        left = mid;
+      } else {
+        right = mid - 1;
+      }
+    }
+
+    return left;
   }
 }

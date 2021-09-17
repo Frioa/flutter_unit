@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_unit/algorithms/algorithms.dart';
 import 'package:flutter_unit/algorithms/quick_sort.dart';
 import 'package:flutter_unit/utils/utils.dart';
@@ -15,7 +16,6 @@ import 'package:flutter_unit/utils/utils.dart';
 
 void main() {
   final dataSize = [1000000];
-  final sort = QuickSort();
   final sort2 = QuickSort(type: QuickSortType.threeWay);
 
 

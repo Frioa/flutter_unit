@@ -6,9 +6,7 @@ part of 'app_state.dart';
 // AutoequalGenerator
 // **************************************************************************
 
-extension _$AppStateAutoequal on AppState {
-  List<Object?> get _autoequalProps => [theme, markdownTheme];
-}
+
 
 // **************************************************************************
 // CopyWithGenerator

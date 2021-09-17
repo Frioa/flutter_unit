@@ -4,6 +4,11 @@
 # <pedantic> https://pub.dev/packages/pedantic
 # <lint> https://pub.dev/packages/lint
 #
+include:
+  - package:lints/recommended.yaml
+  - package:lints/core.yaml
+  - package:flutter_lints/flutter.yaml
+
 linter:
   rules:
     #
