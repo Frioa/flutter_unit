@@ -5,10 +5,12 @@ enum BinarySearchType {
   searchR,
   normal,
   //
-  upper, // (upperCeil) 查找 大于 target 的最小值
+  upper, // 查找 大于 target 的最小索引
+  lower, // 查找 小于 target 的最大索引
+  upperFloor,
   lowerCeil, // 返回 >= target 的最小索引
   //
-  lower, // 查找小于 target 的最大值
+  lowerFloor,
 }
 
 class BinarySearch<E> extends Search<E> {
@@ -35,6 +37,12 @@ class BinarySearch<E> extends Search<E> {
     }
     if (type == BinarySearchType.lower) {
       return _lower(data, target);
+    }
+    if (type == BinarySearchType.lowerFloor) {
+      return _lowerFloor(data, target);
+    }
+    if (type == BinarySearchType.upperFloor) {
+      return _upperFloor(data, target);
     }
 
     return -1;
@@ -116,6 +124,45 @@ class BinarySearch<E> extends Search<E> {
         left = mid;
       } else {
         right = mid - 1;
+      }
+    }
+
+    return left;
+  }
+
+  int _lowerFloor(List<E> data, E target) {
+    final res = _lower(data, target);
+    if (res + 1 < data.length && data[res + 1] == target) {
+      return res + 1;
+    }
+    return res;
+  }
+
+  //  查找 大于 target 的最小值
+  int _upperFloor(List<E> data, E target) {
+    int left = 0;
+    int right = data.length;
+
+    while(left < right) {
+      final mid = (left + right) >> 1;
+
+      if (compare(data[mid], target) <= 0) {
+        left = mid + 1;
+      } else {
+        right = mid;
+      }
+    }
+
+    if (left - 1 > 0  && data[left - 1] == target) {
+      right = left - 1;
+      left = 0;
+      while (left < right) {
+        final mid = (left + right) >> 1;
+        if (compare(data[mid], target) < 0) {
+          left = mid + 1;
+        } else {
+          right = mid;
+        }
       }
     }
 
