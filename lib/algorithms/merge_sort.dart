@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter_unit/algorithms/algorithms.dart';
 import 'package:flutter_unit/algorithms/insert_sort.dart';
-import 'package:flutter_unit/utils/algorithms_utils.dart';
 
 enum MergeSortType {
   normal,
