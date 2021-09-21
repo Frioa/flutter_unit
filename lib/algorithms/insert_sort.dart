@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_unit/algorithms/sort.dart';
-import 'package:flutter_unit/utils/utils.dart';
 
 enum InsetSortType {
   swap,
@@ -14,13 +13,12 @@ enum InsetSortType {
 /// 由于存在 [compare(t, list[j - 1])] 循环会提前终止。
 /// 对于近乎【有序数组】，时间复杂度将优化到 O（n）级别
 ///
-class InsetSort<T> extends Sort<T> {
+class InsetSort<T extends Comparable> extends Sort<T> {
   final InsetSortType type;
 
   InsetSort({
     this.type = InsetSortType.normal,
-    int Function(T, T) compare = defaultCompare,
-  }) : super(compare);
+  });
 
   @override
   String get name => 'Inset Sort';
@@ -43,7 +41,8 @@ class InsetSort<T> extends Sort<T> {
     for (int i = left; i <= right; i++) {
       int j = i;
       final t = list[i];
-      for (; j > left && compare(t, list[j - 1]) < 0; j--) {
+
+      for (; j > left && t.compareTo(list[j]) < 0; j--) {
         list[j] = list[j - 1];
       }
       list[j] = t;
@@ -55,7 +54,7 @@ class InsetSort<T> extends Sort<T> {
       int j = i;
       final t = list[i];
 
-      for (; j + 1 < list.length && compare(t, list[j + 1]) > 0; j++) {
+      for (; j + 1 < list.length && t.compareTo(list[j + 1]) > 0; j++) {
         list[j] = list[j + 1];
       }
       list[j] = t;
@@ -68,7 +67,7 @@ class InsetSort<T> extends Sort<T> {
   void _swap(List<T> list) {
     for (int i = 1; i < list.length; i++) {
       for (int j = i; j > 0; j--) {
-        if (compare(list[j - 1], list[j]) < 0) break;
+        if (list[j - 1].compareTo(list[j]) < 0) break;
 
         list.swap(j, j - 1);
       }

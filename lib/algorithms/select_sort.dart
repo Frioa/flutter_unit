@@ -2,20 +2,18 @@ import 'package:collection/collection.dart';
 import 'package:flutter_unit/algorithms/algorithms.dart';
 import 'package:flutter_unit/utils/utils.dart';
 
-
 enum SelectSortType {
   normal,
   normalReverse,
   situ,
 }
 
-class SelectSort<T> extends Sort<T> {
+class SelectSort<T extends Comparable> extends Sort<T> {
   final SelectSortType type;
 
   SelectSort({
     this.type = SelectSortType.normal,
-    int Function(T, T) compare = defaultCompare,
-  }) : super(compare);
+  });
 
   @override
   void sort(List<T> list) {
@@ -29,7 +27,7 @@ class SelectSort<T> extends Sort<T> {
     for (int i = 0; i < list.length; i++) {
       var minIndex = i;
       for (int j = i; j < list.length; j++) {
-        if (compare(list[j], list[minIndex]) < 0) {
+        if (list[j].compareTo(list[minIndex]) < 0) {
           minIndex = j;
         }
       }
@@ -41,7 +39,7 @@ class SelectSort<T> extends Sort<T> {
     for (int i = list.length - 1; i >= 0; i--) {
       var maxIndex = i;
       for (int j = i; j >= 0; j--) {
-        if (compare(list[j], list[maxIndex]) > 0) {
+        if (list[j].compareTo(list[maxIndex]) > 0) {
           maxIndex = j;
         }
       }
@@ -56,7 +54,8 @@ class SelectSort<T> extends Sort<T> {
     for (int i = 0; i < list.length; i++) {
       var minIndex = 0;
       for (int j = 0; j < list.length; j++) {
-        if (!visit[j] && compare(list[j], list[minIndex]) < 0) {
+        if (!visit[j] &&        list[j].compareTo(list[minIndex]) < 0
+        ) {
           minIndex = j;
         }
       }

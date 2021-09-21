@@ -9,15 +9,14 @@ enum MergeSortType {
   bottomUp,
 }
 
-class MergeSort<T> extends Sort<T> {
+class MergeSort<T extends Comparable> extends Sort<T> {
   final MergeSortType type;
   late List<T> temp;
   final InsetSort insetSort = InsetSort();
 
   MergeSort({
     this.type = MergeSortType.normal,
-    int Function(T, T) compare = defaultCompare,
-  }) : super(compare);
+  });
 
   @override
   String get name => 'Merge Sort';
@@ -47,7 +46,7 @@ class MergeSort<T> extends Sort<T> {
     _mergeSort(list, mid + 1, right);
 
     /// [NOTE]: 优化对于两个顺序的数组
-    if (compare(list[mid], list[mid + 1]) < 0) return;
+    if (list[mid].compareTo(list[mid + 1]) < 0) return;
 
     /// 对两个有序的数组进行排序
     _mergeList(list, left, mid, right);
@@ -62,7 +61,7 @@ class MergeSort<T> extends Sort<T> {
         final int mid = left + sz - 1;
 
         /// [NOTE]: 优化对于两个顺序的数组
-        if (mid + 1 < list.length && compare(list[mid], list[mid + 1]) < 0) continue;
+        if (mid + 1 < list.length && list[mid].compareTo(list[mid + 1]) < 0) continue;
 
         // if (right - left <= 15) {
         //   insetSort.sort(list, left, right);
@@ -84,7 +83,7 @@ class MergeSort<T> extends Sort<T> {
         curValue = temp[j++];
       } else if (j > right) {
         curValue = temp[i++];
-      } else if (compare(temp[i], temp[j]) < 0) {
+      } else if (temp[i].compareTo(temp[j]) < 0) {
         curValue = temp[i++];
       } else {
         curValue = temp[j++];

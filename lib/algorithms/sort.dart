@@ -1,10 +1,6 @@
 import 'package:flutter_unit/utils/utils.dart';
 
-abstract class Sort<T> {
-  final int Function(T, T) compare;
-
-  Sort([this.compare = defaultCompare]);
-
+abstract class Sort<T extends Comparable> {
   String get name;
 
   void sort(List<T> list);
@@ -25,7 +21,7 @@ abstract class Sort<T> {
 
   bool isSorted(List<T> list) {
     for (int i = 1; i < list.length; i++) {
-      if (compare(list[i - 1], list[i]) > 0) return false;
+      if (list[i - 1].compareTo(list[i]) > 0) return false;
     }
 
     return true;

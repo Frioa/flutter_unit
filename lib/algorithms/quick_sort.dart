@@ -9,14 +9,13 @@ enum QuickSortType {
   threeWay,
 }
 
-class QuickSort<T> extends Sort<T> {
+class QuickSort<T extends Comparable> extends Sort<T> {
   final QuickSortType type;
   Random random = Random();
 
   QuickSort({
     this.type = QuickSortType.normal,
-    int Function(T, T) compare = defaultCompare,
-  }) : super(compare);
+  });
 
   @override
   String get name => 'Quick Sort(type: $type)';
@@ -44,11 +43,11 @@ class QuickSort<T> extends Sort<T> {
     int j = right;
 
     while (true) {
-      while (i <= j && compare(list[i], list[kIndex]) < 0) {
+      while (i <= j && list[i].compareTo(list[kIndex]) < 0) {
         i++;
       }
 
-      while (j >= i && compare(list[j], list[kIndex]) > 0) {
+      while (j >= i && list[j].compareTo(list[kIndex]) > 0) {
         j--;
       }
 
@@ -85,10 +84,10 @@ class QuickSort<T> extends Sort<T> {
 
     while (i < gt) {
       // 移动 i 的位置
-      if (compare(list[i], kValue) == 0) {
+      if (list[i].compareTo(kValue) == 0) {
         i++;
         // 扩充前面的区间，lt + 1，并且交互位置
-      } else if (compare(list[i], kValue) < 0) {
+      } else if (list[i].compareTo(kValue) < 0) {
         list.swap(++lt, i++);
       } else {
         // 扩充 > v 的区域 gt - 1，并且交互位置。注：不用 i ++
