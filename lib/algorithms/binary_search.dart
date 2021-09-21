@@ -143,7 +143,7 @@ class BinarySearch<E> extends Search<E> {
     int left = 0;
     int right = data.length;
 
-    while(left < right) {
+    while (left < right) {
       final mid = (left + right) >> 1;
 
       if (compare(data[mid], target) <= 0) {
@@ -153,7 +153,7 @@ class BinarySearch<E> extends Search<E> {
       }
     }
 
-    if (left - 1 > 0  && data[left - 1] == target) {
+    if (left - 1 > 0 && data[left - 1] == target) {
       right = left - 1;
       left = 0;
       while (left < right) {
