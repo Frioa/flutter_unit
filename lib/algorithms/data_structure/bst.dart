@@ -10,31 +10,21 @@ class BST<T extends Comparable> {
     _size = size;
   }
 
-  void add(T t) {
-    if (root == null) {
-      root = Node<T>(t);
-    } else {
-      _add(root!, t);
-    }
-  }
+  void add(T e) => root = _add(root, e);
 
-  void _add(Node<T> node, T e) {
-    if (node.e == e) return;
-    if (e.compareTo(node.e) < 0 && node.left == null) {
-      node.left = Node(e);
+  Node<T> _add(Node<T>? node, T e) {
+    if (node == null) {
       _size++;
-      return;
-    } else if (e.compareTo(node.e) > 0 && node.right == null) {
-      node.right = Node(e);
-      _size++;
-      return;
+      return Node(e);
     }
 
     if (e.compareTo(node.e) < 0) {
-      _add(node.left!, e);
-    } else {
-      _add(node.right!, e);
+      node.left = _add(node.left, e);
+    } else if (e.compareTo(node.e) > 0) {
+      node.right = _add(node.right, e);
     }
+
+    return node;
   }
 }
 
